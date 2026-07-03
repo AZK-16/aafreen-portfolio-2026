@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@500;600;700&family=Rubik:wght@500;600;700&family=Noto+Nastaliq+Urdu:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  [data-side]{scrollbar-width:thin;scrollbar-color:#e0c9a0 transparent;}
+  [data-side]::-webkit-scrollbar{width:8px;}
+  [data-side]::-webkit-scrollbar-thumb{background:#e0c9a0;border-radius:4px;}
+  [data-side]::-webkit-scrollbar-track{background:transparent;}
+  body{margin:0;background:#f5f1e9;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1a1a1a;}
+  ::selection{background:#f7d6e0;}
+  @keyframes homeFade{0%{opacity:0;transform:translateY(22px);}100%{opacity:1;transform:translateY(0);}}
+  @keyframes revealUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeOnly{from{opacity:0;}to{opacity:1;}}
+  /* Transition range: keep everything inside the viewport (no horizontal scroll)
+     while the desktop 2-column shell is still active. */
+  @media (max-width: 1200px){
+    [data-side]{min-width:0 !important;}
+    [data-main]{min-width:0 !important;}
+    [data-about]{grid-template-columns:1fr !important;}
+    [data-exp-date]{display:none !important;}
+    [data-hero-title]{font-size:38px !important;line-height:1.12 !important;}
+    [data-name-en]{font-size:38px !important;}
+    [data-name-ur]{font-size:36px !important;}
+    [data-side-foot]{flex-wrap:wrap !important;gap:10px 16px !important;}
+    [data-side-foot] span{white-space:normal !important;overflow-wrap:anywhere !important;}
+  }
+  @media (max-width: 980px){
+    [data-page]{padding:0 !important;align-items:stretch !important;flex-direction:column !important;}
+    [data-grid]{grid-template-columns:1fr !important;gap:0 !important;max-width:none !important;}
+
+    /* compact sticky topbar takes over — sidebar drops to plain hero, in flow */
+    [data-topbar]{display:block !important;}
+    [data-side]{position:static !important;height:auto !important;max-height:none !important;margin:0 !important;overflow:visible !important;padding:28px 24px 6px !important;background:transparent !important;border:0 !important;box-shadow:none !important;display:block !important;}
+    [data-side]::after{display:none !important;}
+    [data-grid]::after{display:none !important;}
+    [data-side] nav[data-nav]{display:none !important;}
+    [data-side-foot]{display:none !important;}
+    [data-main]{padding:10px 24px 52px !important;}
+
+    [data-hero-title]{font-size:34px !important;line-height:1.12 !important;}
+    [data-name-en]{font-size:34px !important;}
+    [data-name-ur]{font-size:32px !important;}
+    [data-lede]{margin-top:16px !important;font-size:18px !important;line-height:1.5 !important;max-width:480px !important;}
+    [data-lede-em]{font-size:22px !important;}
+    [data-lede-brk]{display:block !important;height:0 !important;}
+    [data-brk]{display:block !important;height:0 !important;}
+  }
+  @media (max-width: 620px){
+    [data-main]{padding:24px 16px 44px !important;}
+    #about{margin-top:22px !important;}
+    #experience,#value{margin-top:18px !important;}
+    #contact{margin-top:20px !important;padding:16px 0 8px !important;}
+    [data-about]{grid-template-columns:1fr !important;}
+    [data-card]{padding:24px !important;}
+    [data-side]{padding:22px 16px 4px !important;}
+    [data-topbar-bar]{padding:14px 16px !important;}
+    [data-topbar-menu-inner]{padding:4px 16px 20px !important;}
+    [data-topbar-name]{font-size:18px !important;}
+    [data-hero-title]{font-size:30px !important;}
+    [data-name-en]{font-size:30px !important;}
+    [data-name-ur]{font-size:28px !important;}
+    [data-brk]{display:inline !important;height:auto !important;}
+    [data-lede]{font-size:17px !important;margin-top:14px !important;max-width:none !important;}
+    [data-lede-brk2]{display:block !important;height:0 !important;}
+    [data-links]{flex-wrap:wrap !important;}
+  }
+  @media (max-width: 460px){
+    [data-topbar-name]{font-size:16px !important;}
+    [data-topbar-bar]{gap:10px !important;}
+  }
+  @keyframes nameFadeEn{
+    0%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
+    42%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
+    50%{opacity:0;clip-path:inset(-0.35em 0 -0.35em 100%);}
+    50.01%{opacity:0;clip-path:inset(-0.35em 100% -0.35em 0);}
+    92%{opacity:0;clip-path:inset(-0.35em 100% -0.35em 0);}
+    100%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
+  }
+  @keyframes nameFadeUr{
+    0%{opacity:0;clip-path:inset(-0.35em 100% -0.35em 0);}
+    42%{opacity:0;clip-path:inset(-0.35em 100% -0.35em 0);}
+    50%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
+    92%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
+    100%{opacity:0;clip-path:inset(-0.35em 0 -0.35em 100%);}
+  }
+</style>
+</helmet>
+
+<div data-page style="min-height:100vh;background:#f5f1e9;padding:48px 40px 64px;display:flex;align-items:flex-start;">
+
+  <header data-topbar style="display:none;position:sticky;top:0;z-index:200;background:rgba(247,243,236,0.94);backdrop-filter:saturate(1.5) blur(10px);-webkit-backdrop-filter:saturate(1.5) blur(10px);border-bottom:1px solid #ece2d0;box-shadow:0 6px 22px rgba(74,30,46,0.06);">
+    <div data-topbar-bar style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;">
+      <a data-topbar-name href="#top" onClick="{{ backToTop }}" style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:-0.01em;line-height:1.1;color:#d9852a;text-decoration:none;">Aafreen Zainab Kashif</a>
+      <button data-burger onClick="{{ toggleMenu }}" aria-label="Toggle menu" style="flex:0 0 auto;position:relative;width:30px;height:22px;padding:0;border:0;background:transparent;cursor:pointer;">
+        <span style="{{ barTop }}"></span>
+        <span style="{{ barMid }}"></span>
+        <span style="{{ barBot }}"></span>
+      </button>
+    </div>
+    <div data-topbar-menu style="{{ menuWrapStyle }}">
+      <div data-topbar-menu-inner style="padding:4px 24px 22px;">
+        <nav style="display:flex;flex-direction:column;">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+            <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;border-bottom:1px solid #ece2d0;transition:color .2s ease;" style-hover="color:#d9852a;">{{ item.label }}</a>
+          </sc-for>
+        </nav>
+        <div style="margin-top:22px;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a8477;margin-bottom:14px;">Contact me via</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <a href="https://www.linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:13px;font-size:16px;font-weight:600;color:#1a1a1a;text-decoration:none;">
+              <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#f6e4cf;color:#d9852a;flex:0 0 auto;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;display:block;"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z\"/></svg></span>
+              LinkedIn
+            </a>
+            <a href="https://github.com/AZK-16" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:13px;font-size:16px;font-weight:600;color:#1a1a1a;text-decoration:none;">
+              <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#f6e4cf;color:#d9852a;flex:0 0 auto;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;display:block;"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.87.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z\"/></svg></span>
+              GitHub
+            </a>
+            <a href="mailto:aafreenz@hotmail.co.uk" style="display:flex;align-items:center;gap:13px;font-size:16px;font-weight:600;color:#1a1a1a;text-decoration:none;">
+              <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#f6e4cf;color:#d9852a;flex:0 0 auto;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:block;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></span>
+              aafreenz@hotmail.co.uk
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div data-grid style="max-width:1360px;margin:0 auto;width:100%;display:grid;grid-template-columns:0.62fr 1.38fr;gap:54px;align-items:start;position:relative;" style-after="content:'';position:absolute;top:-48px;bottom:-64px;left:calc(0.31 * (100% - 54px));width:1px;background:rgba(217,133,42,0.55);pointer-events:none;">
+
+    <div data-side style="{{ reveal0 }}" data-reveal>
+      <div data-intro>
+        <h1 data-hero-title style="margin:0;font-family:'DM Sans';font-weight:700;font-size:46px;line-height:1.14;letter-spacing:-0.02em;color:#1a1a1a;">Hi, I&rsquo;m <span style="display:inline-grid;position:relative;vertical-align:baseline;">
+          <span data-name-en style="{{ slotEn }}">Aafreen</span>
+          <span data-name-ur style="{{ slotUr }}">آفرین</span>
+        </span><br>Multilingual UX &amp;<span data-brk> </span>Graphic Designer.</h1>
+
+        <p data-lede style="margin:24px 0 0;font-size:20px;font-weight:500;line-height:1.55;color:#36342f;max-width:430px;">I design <span data-lede-em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:24px;color:#d9852a;">beyond language and borders,</span><span data-lede-brk> </span>building inclusive systems with<span data-lede-brk2> </span>cultural insight.</p>
+      </div>
+
+      <nav data-nav style="margin-top:30px;display:flex;flex-direction:column;">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+          <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="{{ item.rowStyle }}" style-hover="background:#f3ece0;">
+            <span data-nav-rail style="{{ item.railStyle }}">
+              <span style="{{ item.lineStyle }}"></span>
+              <span style="{{ item.dotStyle }}"></span>
+            </span>
+            <span style="{{ item.labelStyle }}" data-nav-label>{{ item.label }}</span>
+          </a>
+        </sc-for>
+      </nav>
+
+      <div data-side-foot style="margin-top:26px;padding-top:20px;border-top:1px solid #e8cfaa;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:13px;color:#6b6862;white-space:nowrap;">&copy; 2026</span>
+        <a href="https://www.linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" title="LinkedIn" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;color:#d9852a;text-decoration:none;transition:background .2s ease;" style-hover="background:#f3ece0;">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;display:block;"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        </a>
+        <a href="https://github.com/AZK-16" target="_blank" rel="noopener" title="GitHub" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;color:#d9852a;text-decoration:none;transition:background .2s ease;" style-hover="background:#f3ece0;">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;display:block;"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.87.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg>
+        </a>
+        <div title="Email" style="display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:6px 8px;">
+          <i data-lucide="mail" style="width:18px;height:18px;color:#d9852a;"></i>
+          <span style="font-size:13px;color:#6b6862;white-space:nowrap;">aafreenz@hotmail.co.uk</span>
+        </div>
+      </div>
+    </div>
+
+    <div data-main style="{{ reveal1 }}">
+      <a id="emr" href="EMR Case Study.dc.html" style="scroll-margin-top:32px;animation:fadeOnly .7s ease both;display:block;border-radius:22px;overflow:hidden;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#fff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
+        <img src="uploads/EMR%20Background%20cream-74982a4f.png" alt="East Midlands Railway case study — how our team redesigned EMR's interface to streamline ticketing for diverse commuters" style="display:block;width:100%;height:auto;" />
+      </a>
+
+      <div id="about" style="scroll-margin-top:32px;margin-top:32px;">
+
+        <div data-reveal style="will-change:opacity,transform;">
+          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+
+            <div style="display:flex;align-items:center;gap:16px;margin:0 0 22px;">
+              <div style="flex:0 0 auto;width:52px;height:52px;border-radius:50%;overflow:hidden;box-shadow:0 4px 14px rgba(74,30,46,0.16);border:2px solid #ffffff;">
+                <img src="uploads/linkedin%20profile.png" alt="Aafreen" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;" />
+              </div>
+              <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">About me</h2>
+            </div>
+
+            <div data-about style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+              <div style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
+                <div style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
+                  <img src="uploads/image%2011.png" alt="Madras Coffee House" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.4);transform-origin:center;" />
+                </div>
+                <p style="margin:0;font-size:16px;font-weight:500;line-height:1.45;color:#36342f;">Born and raised in London with roots in Chennai &#127470;&#127475;</p>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
+                <div style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
+                  <img src="uploads/bonjour.png" alt="Bonjour written in snow" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 50%;" />
+                </div>
+                <p style="margin:0;font-size:16px;font-weight:500;line-height:1.45;color:#36342f;">I&rsquo;m a polyglot (although I keep losing my Duolingo streak &#128148;)</p>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
+                <div style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
+                  <img src="uploads/ocean%20painting.png" alt="Ocean painting" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 38%;" />
+                </div>
+                <p style="margin:0;font-size:16px;font-weight:500;line-height:1.45;color:#36342f;">My unusual interests include ocean painting and etymology &#127754;</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="experience" style="scroll-margin-top:32px;margin-top:32px;">
+        <div data-reveal style="will-change:opacity,transform;">
+          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);display:flex;flex-direction:column;gap:34px;">
+            <sc-for list="{{ groups }}" as="group" hint-placeholder-count="3">
+              <div>
+                <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">{{ group.heading }}</h2>
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <sc-for list="{{ group.entries }}" as="entry" hint-placeholder-count="2">
+                    <div style="background:#faf7f1;border:1px solid #ece6db;border-radius:16px;overflow:hidden;">
+                      <div onClick="{{ entry.onClick }}" style="display:flex;align-items:center;gap:16px;padding:16px 20px;cursor:pointer;">
+                        <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:{{ entry.iconBg }};">
+                          <i data-lucide="{{ entry.icon }}" style="width:21px;height:21px;color:{{ entry.iconColor }};"></i>
+                        </div>
+                        <div style="flex:1 1 auto;min-width:0;">
+                          <div style="font-family:'DM Sans';font-weight:700;font-size:19px;line-height:1.25;color:#1a1a1a;">{{ entry.title }}</div>
+                          <sc-if value="{{ entry.hasSubtitle }}" hint-placeholder-val="{{ true }}">
+                            <div style="margin-top:2px;font-size:14px;font-weight:500;color:#6b6862;">{{ entry.subtitle }}</div>
+                          </sc-if>
+                        </div>
+                        <div data-exp-date style="flex:0 0 auto;font-weight:700;font-size:15px;color:#6b6862;white-space:nowrap;">{{ entry.date }}</div>
+                        <span style="{{ entry.chevronStyle }}"><i data-lucide="chevron-down" style="width:20px;height:20px;color:#d9852a;display:block;"></i></span>
+                      </div>
+                      <div style="{{ entry.bodyWrapStyle }}">
+                        <div style="border-top:1px solid #ece6db;padding:16px 20px 18px;font-size:16px;line-height:1.55;color:#4d4a44;">{{ entry.body }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div id="value" style="scroll-margin-top:32px;margin-top:32px;">
+        <div data-reveal style="will-change:opacity,transform;">
+          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+            <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">What I bring to the table</h2>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <sc-for list="{{ valueItems }}" as="entry" hint-placeholder-count="3">
+                <div style="display:flex;gap:18px;align-items:flex-start;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
+                  <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:{{ entry.iconBg }};">
+                    <i data-lucide="{{ entry.icon }}" style="width:24px;height:24px;color:{{ entry.iconColor }};"></i>
+                  </div>
+                  <div style="flex:1 1 auto;min-width:0;">
+                    <div style="font-family:'DM Sans';font-weight:700;font-size:19px;line-height:1.25;color:{{ entry.iconColor }};margin-bottom:7px;">{{ entry.title }}</div>
+                    <div style="font-size:16px;line-height:1.55;color:#4d4a44;">{{ entry.body }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="contact" style="scroll-margin-top:32px;margin-top:24px;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:24px 0 8px;">
+        <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.2;letter-spacing:-0.02em;color:#1a1a1a;max-width:640px;margin-left:auto;margin-right:auto;">Let&rsquo;s build inclusive experiences for a global audience &#127757;</h2>
+        <div style="display:flex;justify-content:center;margin-top:24px;">
+          <button onClick="{{ copyEmail }}" style="{{ copyBtnStyle }}" style-hover="filter:brightness(0.95);">{{ copyBtnLabel }}</button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px;font-size:17px;font-weight:600;color:#1a1a1a;" data-links>
+          <a href="https://linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">LinkedIn</a>
+          <span style="color:#c9c1b2;">&middot;</span>
+          <a href="mailto:aafreenz@hotmail.co.uk" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Email</a>
+          <span style="color:#c9c1b2;">&middot;</span>
+          <a href="https://github.com/AZK-16" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">GitHub</a>
+          <span style="color:#c9c1b2;">&middot;</span>
+          <a href="#top" onClick="{{ backToTop }}" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Back to Top</a>
+        </div>
+        <p style="margin:26px 0 0;font-size:13px;color:#8a8477;">Aafreen Zainab Kashif &copy; 2026</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: {}, active: 'emr', menuOpen: false, copied: false };
+  sectionIds = ['emr','about','experience','value'];
+  componentDidMount() {
+    const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
+    tryIcons();
+
+    this.spy = () => {
+      const line = window.innerHeight * 0.28;
+      let current = this.sectionIds[0];
+      for (const id of this.sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      }
+      if (current !== this.state.active) this.setState({ active: current });
+    };
+    window.addEventListener('scroll', this.spy, { passive: true });
+    this.spy();
+
+    this.onDocDown = (e) => {
+      if (!this.state.menuOpen) return;
+      const bar = document.querySelector('[data-topbar]');
+      if (bar && !bar.contains(e.target)) this.setState({ menuOpen: false });
+    };
+    document.addEventListener('mousedown', this.onDocDown);
+
+    const cards = Array.from(document.querySelectorAll('[data-reveal]'));
+    cards.forEach(el => { el.style.opacity = '0'; el.style.willChange = 'opacity, transform'; el.__revealed = false; });
+    const reveal = (el, delay) => {
+      if (el.__revealed) return;
+      el.__revealed = 'pending';
+      const anim = el.animate(
+        [ { opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'translateY(0)' } ],
+        { duration: 650, delay: delay || 0, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' }
+      );
+      anim.onfinish = () => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; try { anim.cancel(); } catch (e) {} el.__revealed = true; };
+    };
+    this.revObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { reveal(e.target); this.revObs.unobserve(e.target); } });
+    }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+    cards.forEach(el => this.revObs.observe(el));
+
+    requestAnimationFrame(() => {
+      let i = 0;
+      cards.forEach(el => {
+        if (!el.__revealed && el.getBoundingClientRect().top < window.innerHeight - 40) {
+          reveal(el, i * 110); this.revObs.unobserve(el); i++;
+        }
+      });
+    });
+    const forceShow = (el) => { el.getAnimations().forEach(a => { try { a.cancel(); } catch (e) {} }); el.style.opacity = '1'; el.style.transform = 'translateY(0)'; el.__revealed = true; };
+    this._fallbackT = setTimeout(() => {
+      cards.forEach(el => { if (el.__revealed !== true && el.getBoundingClientRect().top < window.innerHeight - 40) { forceShow(el); this.revObs.unobserve(el); } });
+    }, 1000);
+  }
+  componentWillUnmount() {
+    if (this.spy) window.removeEventListener('scroll', this.spy);
+    if (this.onDocDown) document.removeEventListener('mousedown', this.onDocDown);
+    if (this.revObs) this.revObs.disconnect();
+    if (this._fallbackT) clearTimeout(this._fallbackT);
+    if (this._copyT) clearTimeout(this._copyT);
+  }
+  componentDidUpdate() {
+    if (window.lucide) window.lucide.createIcons();
+  }
+  renderVals() {
+    const activeId = this.state.active;
+    const items = [
+      { label: 'Case studies', href: '#emr' },
+      { label: 'About me', href: '#about' },
+      { label: 'Experience', href: '#experience' },
+      { label: 'What I bring to the table', href: '#value' },
+    ];
+    const last = items.length - 1;
+    const nav = items.map((it, i) => {
+      let lineTop = '0', lineBottom = '0';
+      if (i === 0) lineTop = '50%';
+      if (i === last) lineBottom = '50%';
+      const isActive = ('#' + activeId) === it.href;
+      return {
+        label: it.label,
+        href: it.href,
+        rowStyle: 'display:flex;align-items:stretch;gap:18px;text-decoration:none;padding:0 14px 0 8px;margin-left:-8px;border-radius:12px;transition:background .2s ease;min-height:44px;',
+        railStyle: 'position:relative;flex:0 0 auto;width:16px;align-self:stretch;',
+        lineStyle: 'position:absolute;left:50%;transform:translateX(-50%);top:' + lineTop + ';bottom:' + lineBottom + ';width:2px;background:#e8cfaa;',
+        dotStyle: isActive
+          ? 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#d9852a;box-shadow:0 0 0 4px #f5f1e9, 0 0 0 7px rgba(217,133,42,0.18);transition:background .3s ease, box-shadow .3s ease;'
+          : 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#f5f1e9;border:2.5px solid #d9852a;box-shadow:0 0 0 4px #f5f1e9;transition:background .3s ease, box-shadow .3s ease;',
+        labelStyle: 'display:flex;align-items:center;font-size:18px;font-weight:' + (isActive ? '600' : '500') + ';color:' + (isActive ? '#1a1a1a' : '#4d4a44') + ';transition:color .3s ease;',
+      };
+    });
+    const reveal0 = 'position:sticky;top:0;height:100vh;max-height:100vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:48px 44px 64px 0;margin-top:-48px;margin-bottom:-64px;';
+    const reveal1 = '';
+    const slotBase = 'grid-area:1/1;align-self:baseline;justify-self:start;white-space:nowrap;color:#d9852a;line-height:1.15;';
+    const slotEn = slotBase + "font-family:'DM Sans',system-ui,sans-serif;font-weight:700;font-size:46px;letter-spacing:-0.02em;animation:nameFadeEn 10s ease-in-out infinite;";
+    const slotUr = slotBase + "font-family:'Rubik','Noto Nastaliq Urdu',serif;font-weight:600;font-size:43px;direction:rtl;animation:nameFadeUr 10s ease-in-out infinite;";
+    const isOpen = (id) => this.state.open[id] === true;
+    const toggle = (id) => this.setState(s => ({ open: Object.assign({}, s.open, { [id]: !s.open[id] }) }));
+    const buildEntry = (e) => {
+      const open = isOpen(e.id);
+      return {
+        icon: e.icon,
+        iconBg: e.iconBg,
+        iconColor: e.iconColor,
+        title: e.title,
+        subtitle: e.subtitle || '',
+        hasSubtitle: !!e.subtitle,
+        date: e.date,
+        body: e.body,
+        onClick: () => toggle(e.id),
+        chevronStyle: 'flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.22,1,.36,1);transform:rotate(' + (open ? '180deg' : '0deg') + ');',
+        bodyWrapStyle: 'overflow:hidden;transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (open ? '360px' : '0px') + ';opacity:' + (open ? 1 : 0) + ';',
+      };
+    };
+    const groups = [
+      { heading: 'Experience', entries: [
+        { id: 'qa', icon: 'briefcase', iconBg: '#f6e4cf', iconColor: '#d9852a', title: 'QA Specialist Intern \u2192 UX Designer', date: '2024\u20132025', body: 'Progressed from testing platform functionality to collaboratively redesigning key features and creating visual assets, enhancing the overall user experience for a growing creator platform.' },
+        { id: 'fe', icon: 'code', iconBg: '#e7ecfb', iconColor: '#4a5fc4', title: 'Frontend Web Developer', date: '2022\u20132022', body: 'Built on foundational coding skills in HTML and CSS while growing confidence in tools like Visual Studio Code and Materialize to support development of user-focused web interfaces.' },
+      ].map(buildEntry) },
+      { heading: 'Education', entries: [
+        { id: 'qmul', icon: 'graduation-cap', iconBg: '#e0f0e8', iconColor: '#1f8a6d', title: 'Queen Mary University of London', subtitle: 'Computer Science BSc Hons', date: '2023\u20132026', body: 'Completed group projects focused on user experience, including ethnographic research and accessibility-driven redesigns of ticket machines, alongside developing a weather app for surfers using HTML, CSS, and React.' },
+      ].map(buildEntry) },
+      { heading: 'Courses', entries: [
+        { id: 'gux', icon: 'award', iconBg: '#eee7fb', iconColor: '#7a56c4', title: 'Google UX Courses 1\u20133', date: '2024\u20132024', body: 'Completed the Foundations of User Experience (UX) Design, Start the UX Design Process: Empathize, Define, and Ideate and Build Wireframes and Low-Fidelity Prototypes courses to build a strong foundation in user-centric design.' },
+        { id: 'gai', icon: 'sparkles', iconBg: '#f6e4cf', iconColor: '#d9852a', title: 'Google AI Essentials', date: '2024\u20132024', body: 'Developed foundational AI skills and techniques such as few-shot prompting, applying them to UX workflows by combining AI-driven efficiency with human insight to create more personalised and empathetic design solutions.' },
+      ].map(buildEntry) },
+    ];
+    const valueItems = [
+      { id: 'global', icon: 'globe', iconBg: '#f6e4cf', iconColor: '#d9852a', title: 'Global Design Mindset', body: 'I am focused on multilingual design, accessibility, and internationalisation (including RTL and Material Design principles), applied to real-world projects.' },
+      { id: 'inclusive', icon: 'accessibility', iconBg: '#e7ecfb', iconColor: '#4a5fc4', title: 'Inclusive Design Focus', body: 'I design with user needs in mind, utilising methods like 3D prototyping to visualise real interactions and tailor system responses to support users of different abilities.' },
+      { id: 'systems', icon: 'layers', iconBg: '#e0f0e8', iconColor: '#1f8a6d', title: 'Integrated Systems Thinking', body: 'I have experience in full-stack development and system design, integrating front-end and back-end solutions to build reliable applications.' },
+    ];
+    const backToTop = (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ menuOpen: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    const mOpen = this.state.menuOpen;
+    const barBase = 'position:absolute;left:0;width:30px;height:2.5px;border-radius:2px;background:#1a1a1a;transition:transform .32s cubic-bezier(.22,1,.36,1), opacity .2s ease;';
+    const barTop = barBase + 'top:2px;transform-origin:center;' + (mOpen ? 'transform:translateY(7.75px) rotate(45deg);' : '');
+    const barMid = barBase + 'top:9.75px;' + (mOpen ? 'opacity:0;transform:scaleX(0.5);' : '');
+    const barBot = barBase + 'bottom:2px;transform-origin:center;' + (mOpen ? 'transform:translateY(-7.75px) rotate(-45deg);' : '');
+    const menuWrapStyle = 'overflow:hidden;transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (mOpen ? '620px' : '0px') + ';opacity:' + (mOpen ? 1 : 0) + ';';
+    const toggleMenu = (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState(s => ({ menuOpen: !s.menuOpen })); };
+    const closeMenu = () => { if (this.state.menuOpen) this.setState({ menuOpen: false }); };
+    const linkOver = (e) => { e.currentTarget.style.color = '#d9852a'; };
+    const linkOut = (e) => { e.currentTarget.style.color = '#1a1a1a'; };
+    const copied = this.state.copied;
+    const copyEmail = () => {
+      const email = 'aafreenz@hotmail.co.uk';
+      const done = () => {
+        this.setState({ copied: true });
+        if (this._copyT) clearTimeout(this._copyT);
+        this._copyT = setTimeout(() => this.setState({ copied: false }), 4000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done).catch(() => {
+          try { const ta = document.createElement('textarea'); ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+          done();
+        });
+      } else {
+        try { const ta = document.createElement('textarea'); ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+        done();
+      }
+    };
+    const copyBtnLabel = copied ? 'Email Copied!' : 'Copy My Email';
+    const copyBtnStyle = 'appearance:none;border:0;cursor:pointer;font-family:\'DM Sans\',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#ffffff;padding:14px 30px;border-radius:999px;box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:background-color .3s ease, filter .2s ease;background:' + (copied ? '#20896E' : '#d9852a') + ';';
+    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle };
+  }
+}
+</script>
+</body>
+</html>
