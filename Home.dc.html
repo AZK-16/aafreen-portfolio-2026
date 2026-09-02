@@ -61,9 +61,10 @@
   @media (max-width: 620px){
     [data-main]{padding:24px 16px 44px !important;}
     #about{margin-top:22px !important;}
-    #experience,#value{margin-top:18px !important;}
+    #experience,#gallery,#value{margin-top:18px !important;}
     #contact{margin-top:20px !important;padding:16px 0 8px !important;}
     [data-about]{grid-template-columns:1fr !important;}
+    [data-gallery-grid]{grid-template-columns:repeat(2,1fr) !important;}
     [data-card]{padding:24px !important;}
     [data-side]{padding:22px 16px 4px !important;}
     [data-topbar-bar]{padding:14px 16px !important;}
@@ -261,6 +262,21 @@
         </div>
       </div>
 
+      <div id="gallery" style="scroll-margin-top:32px;margin-top:32px;">
+        <div data-reveal style="will-change:opacity,transform;">
+          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+            <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">Gallery</h2>
+            <div data-gallery-grid style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+              <sc-for list="{{ galleryImages }}" as="img" hint-placeholder-count="6">
+                <div onClick="{{ img.onClick }}" style="cursor:pointer;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid #ece6db;transition:transform .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-4px);box-shadow:0 12px 26px rgba(74,30,46,0.16);">
+                  <img src="{{ img.src }}" alt="{{ img.alt }}" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;" />
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="value" style="scroll-margin-top:32px;margin-top:32px;">
         <div data-reveal style="will-change:opacity,transform;">
           <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
@@ -301,12 +317,21 @@
     </div>
 
   </div>
+
+  <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:500;background:rgba(20,16,12,0.86);display:flex;align-items:center;justify-content:center;padding:40px;animation:fadeOnly .25s ease both;">
+      <button onClick="{{ closeLightbox }}" aria-label="Close" style="position:absolute;top:24px;right:28px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,0.12);color:#ffffff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease;" style-hover="background:rgba(255,255,255,0.22);">
+        <i data-lucide="x" style="width:22px;height:22px;color:#ffffff;display:block;"></i>
+      </button>
+      <img onClick="{{ stopPropagation }}" src="{{ lightboxSrc }}" alt="{{ lightboxAlt }}" style="max-width:90vw;max-height:88vh;display:block;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,0.5);" />
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { open: {}, active: 'emr', menuOpen: false, copied: false };
-  sectionIds = ['emr','about','experience','value'];
+  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '' };
+  sectionIds = ['emr','about','experience','gallery','value'];
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
     tryIcons();
@@ -329,6 +354,11 @@ class Component extends DCLogic {
       if (bar && !bar.contains(e.target)) this.setState({ menuOpen: false });
     };
     document.addEventListener('mousedown', this.onDocDown);
+
+    this.onEscKey = (e) => {
+      if (e.key === 'Escape' && this.state.lightboxOpen) this.setState({ lightboxOpen: false });
+    };
+    document.addEventListener('keydown', this.onEscKey);
 
     const cards = Array.from(document.querySelectorAll('[data-reveal]'));
     cards.forEach(el => { el.style.opacity = '0'; el.style.willChange = 'opacity, transform'; el.__revealed = false; });
@@ -362,6 +392,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     if (this.spy) window.removeEventListener('scroll', this.spy);
     if (this.onDocDown) document.removeEventListener('mousedown', this.onDocDown);
+    if (this.onEscKey) document.removeEventListener('keydown', this.onEscKey);
     if (this.revObs) this.revObs.disconnect();
     if (this._fallbackT) clearTimeout(this._fallbackT);
     if (this._copyT) clearTimeout(this._copyT);
@@ -375,6 +406,7 @@ class Component extends DCLogic {
       { label: 'Case studies', href: '#emr' },
       { label: 'About me', href: '#about' },
       { label: 'Experience', href: '#experience' },
+      { label: 'Gallery', href: '#gallery' },
       { label: 'What I bring to the table', href: '#value' },
     ];
     const last = items.length - 1;
@@ -467,7 +499,19 @@ class Component extends DCLogic {
     };
     const copyBtnLabel = copied ? 'Email Copied!' : 'Copy My Email';
     const copyBtnStyle = 'appearance:none;border:0;cursor:pointer;font-family:\'DM Sans\',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#ffffff;padding:14px 30px;border-radius:999px;box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:background-color .3s ease, filter .2s ease;background:' + (copied ? '#20896E' : '#d9852a') + ';';
-    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle };
+    const galleryFiles = ['eid mubarak', 'galaxy ship', 'lilac sea', 'little prince', 'plants', 'portal'];
+    const galleryImages = galleryFiles.map(name => {
+      const src = 'uploads/gallery%20pics/' + encodeURIComponent(name) + '.png';
+      const alt = name.replace(/\b\w/g, c => c.toUpperCase());
+      return { src, alt, onClick: () => this.setState({ lightboxOpen: true, lightboxSrc: src, lightboxAlt: alt }) };
+    });
+    const lightboxOpen = this.state.lightboxOpen;
+    const lightboxSrc = this.state.lightboxSrc;
+    const lightboxAlt = this.state.lightboxAlt;
+    const closeLightbox = () => this.setState({ lightboxOpen: false });
+    const stopPropagation = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
+
+    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle, galleryImages, lightboxOpen, lightboxSrc, lightboxAlt, closeLightbox, stopPropagation };
   }
 }
 </script>
