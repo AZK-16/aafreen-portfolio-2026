@@ -338,27 +338,31 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', loaderIndex: 0, loaderExiting: false, loaderDone: false };
-  sectionIds = ['emr','about','experience','gallery','value'];
   loaderWords = ['Hello', 'Bonjour', 'Hola', 'السلام علیکم'];
+  loaderAlreadyShown = (() => { try { return sessionStorage.getItem('azk_loader_shown') === '1'; } catch (e) { return false; } })();
+  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', loaderIndex: 0, loaderExiting: this.loaderAlreadyShown, loaderDone: this.loaderAlreadyShown };
+  sectionIds = ['emr','about','experience','gallery','value'];
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
     tryIcons();
 
-    document.body.style.overflow = 'hidden';
-    this.loaderInterval = setInterval(() => {
-      const next = this.state.loaderIndex + 1;
-      if (next < this.loaderWords.length) {
-        this.setState({ loaderIndex: next });
-      } else {
-        clearInterval(this.loaderInterval);
-        this.setState({ loaderExiting: true });
-        this._loaderDoneT = setTimeout(() => {
-          this.setState({ loaderDone: true });
-          document.body.style.overflow = '';
-        }, 1100);
-      }
-    }, 1000);
+    if (!this.loaderAlreadyShown) {
+      document.body.style.overflow = 'hidden';
+      this.loaderInterval = setInterval(() => {
+        const next = this.state.loaderIndex + 1;
+        if (next < this.loaderWords.length) {
+          this.setState({ loaderIndex: next });
+        } else {
+          clearInterval(this.loaderInterval);
+          this.setState({ loaderExiting: true });
+          this._loaderDoneT = setTimeout(() => {
+            this.setState({ loaderDone: true });
+            document.body.style.overflow = '';
+            try { sessionStorage.setItem('azk_loader_shown', '1'); } catch (e) {}
+          }, 1100);
+        }
+      }, 1000);
+    }
 
     this.spy = () => {
       const line = window.innerHeight * 0.28;
