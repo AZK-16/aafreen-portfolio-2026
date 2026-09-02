@@ -395,7 +395,7 @@ class Component extends DCLogic {
         labelStyle: 'display:flex;align-items:center;font-size:18px;font-weight:' + (isActive ? '600' : '500') + ';color:' + (isActive ? '#1a1a1a' : '#4d4a44') + ';transition:color .3s ease;',
       };
     });
-    const reveal0 = 'position:sticky;top:0;height:100vh;max-height:100vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:48px 44px 64px 0;margin-top:-48px;margin-bottom:-64px;';
+    const reveal0 = 'position:sticky;top:0;height:100vh;max-height:100vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:48px 44px 64px 20px;margin-top:-48px;margin-left:-20px;margin-bottom:-64px;';
     const reveal1 = '';
     const slotBase = 'grid-area:1/1;align-self:baseline;justify-self:start;white-space:nowrap;color:#d9852a;line-height:1.15;';
     const slotEn = slotBase + "font-family:'DM Sans',system-ui,sans-serif;font-weight:700;font-size:46px;letter-spacing:-0.02em;animation:nameFadeEn 10s ease-in-out infinite;";
@@ -421,14 +421,14 @@ class Component extends DCLogic {
     const groups = [
       { heading: 'Experience', entries: [
         { id: 'qa', icon: 'briefcase', iconBg: '#f6e4cf', iconColor: '#d9852a', title: 'QA Specialist Intern \u2192 UX Designer', date: '2024\u20132025', body: 'Progressed from testing platform functionality to collaboratively redesigning key features and creating visual assets, enhancing the overall user experience for a growing creator platform.' },
-        { id: 'fe', icon: 'code', iconBg: '#e7ecfb', iconColor: '#4a5fc4', title: 'Frontend Web Developer', date: '2022\u20132022', body: 'Built on foundational coding skills in HTML and CSS while growing confidence in tools like Visual Studio Code and Materialize to support development of user-focused web interfaces.' },
+        { id: 'fe', icon: 'code', iconBg: '#e7ecfb', iconColor: '#4a5fc4', title: 'Frontend Web Developer', date: '2022', body: 'Built on foundational coding skills in HTML and CSS while growing confidence in tools like Visual Studio Code and Materialize to support development of user-focused web interfaces.' },
       ].map(buildEntry) },
       { heading: 'Education', entries: [
         { id: 'qmul', icon: 'graduation-cap', iconBg: '#e0f0e8', iconColor: '#1f8a6d', title: 'Queen Mary University of London', subtitle: 'Computer Science BSc Hons - 2:1', date: '2023\u20132026', body: 'Completed group projects focused on user experience, including ethnographic research and accessibility-driven redesigns of ticket machines, alongside developing a weather app for surfers using HTML, CSS, and React.' },
       ].map(buildEntry) },
       { heading: 'Courses', entries: [
-        { id: 'gux', icon: 'award', iconBg: '#eee7fb', iconColor: '#7a56c4', title: 'Google UX Courses 1\u20133', date: '2024\u20132024', body: 'Completed the Foundations of User Experience (UX) Design, Start the UX Design Process: Empathize, Define, and Ideate and Build Wireframes and Low-Fidelity Prototypes courses to build a strong foundation in user-centric design.' },
-        { id: 'gai', icon: 'sparkles', iconBg: '#f6e4cf', iconColor: '#d9852a', title: 'Google AI Essentials', date: '2024\u20132024', body: 'Developed foundational AI skills and techniques such as few-shot prompting, applying them to UX workflows by combining AI-driven efficiency with human insight to create more personalised and empathetic design solutions.' },
+        { id: 'gux', icon: 'award', iconBg: '#eee7fb', iconColor: '#7a56c4', title: 'Google UX Courses 1\u20133', date: '2024', body: 'Completed the Foundations of User Experience (UX) Design, Start the UX Design Process: Empathize, Define, and Ideate and Build Wireframes and Low-Fidelity Prototypes courses to build a strong foundation in user-centric design.' },
+        { id: 'gai', icon: 'sparkles', iconBg: '#f6e4cf', iconColor: '#d9852a', title: 'Google AI Essentials', date: '2024', body: 'Developed foundational AI skills and techniques such as few-shot prompting, applying them to UX workflows by combining AI-driven efficiency with human insight to create more personalised and empathetic design solutions.' },
       ].map(buildEntry) },
     ];
     const valueItems = [
