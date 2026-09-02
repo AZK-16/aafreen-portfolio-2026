@@ -24,6 +24,9 @@
     [data-tc-aside]{position:sticky !important;top:0 !important;z-index:50;align-self:stretch !important;margin:0 -16px !important;padding:16px 16px 14px !important;background:#f5f1e9;border-bottom:1px solid #e7ddcb;box-shadow:0 8px 20px rgba(74,30,46,0.06);gap:12px !important;}
     [data-tc-h1]{font-size:36px !important;}
   }
+  @media (max-width: 760px){
+    [data-viewnext-grid]{grid-template-columns:1fr !important;gap:26px !important;}
+  }
   @media (max-width: 640px){
     [data-tc-main] > section{padding:30px 20px !important;}
     [data-tc-h1]{font-size:29px !important;}
@@ -39,20 +42,20 @@
   <div data-tc-grid style="max-width:1190px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:30px;align-items:start;">
 
     <aside data-tc-aside style="position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:14px;">
-      <a href="Home.dc.html" style="display:inline-flex;align-items:center;gap:9px;background:#ffffff;border:1px solid #efeae1;border-radius:999px;padding:10px 18px 10px 14px;text-decoration:none;color:#d9852a;font-weight:700;font-size:14px;font-family:'Poppins';box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:transform .22s ease, box-shadow .22s ease, background .22s ease;align-self:flex-start;" style-hover="transform:translateX(-3px);box-shadow:0 6px 18px rgba(74,30,46,0.12);background:#fdfbf7;">
-        <i data-lucide="arrow-left" style="width:17px;height:17px;color:#d9852a;"></i>Back to home
+      <a href="Home.dc.html" style="display:inline-flex;align-items:center;gap:9px;background:#ffffff;border:1px solid #efeae1;border-radius:999px;padding:10px 18px 10px 14px;text-decoration:none;color:#b21e4a;font-weight:700;font-size:14px;font-family:'Poppins';box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:transform .22s ease, box-shadow .22s ease, background .22s ease;align-self:flex-start;" style-hover="transform:translateX(-3px);box-shadow:0 6px 18px rgba(74,30,46,0.12);background:#fdfbf7;">
+        <i data-lucide="arrow-left" style="width:17px;height:17px;color:#b21e4a;"></i>Back to home
       </a>
       <div style="background:#ffffff;border:1px solid #efeae1;border-radius:20px;padding:22px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
         <div onClick="{{ toggleNav }}" title="Toggle menu" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:{{ navHeaderMb }};transition:margin-bottom .42s cubic-bezier(.22,1,.36,1);border-radius:8px;" style-hover="opacity:0.85;">
-          <div style="color:#d9852a;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Poppins';">Contents</div>
+          <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Poppins';">Contents</div>
           <div style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;">
-            <span style="{{ chevronStyle }}"><i data-lucide="chevron-down" style="width:18px;height:18px;color:#d9852a;display:block;"></i></span>
+            <span style="{{ chevronStyle }}"><i data-lucide="chevron-down" style="width:18px;height:18px;color:#b21e4a;display:block;"></i></span>
           </div>
         </div>
         <div style="{{ navWrapStyle }}">
         <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
           <sc-for list="{{ nav }}" as="item" hint-placeholder-count="12">
-            <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#f6ede0;">
+            <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
               <span style="{{ item.numStyle }}">{{ item.num }}</span>
               <span style="{{ item.labelStyle }}">{{ item.label }}</span>
             </div>
@@ -117,7 +120,7 @@
 
       <section id="context" data-screen-label="02 Context" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
         <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px;">
-          <span style="color:#d9852a;font-weight:700;font-size:24px;font-family:'Poppins';">2</span>
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">2</span>
           <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Context</span>
         </div>
         <p style="margin:0;color:#4d4a44;font-size:19px;line-height:1.55;max-width:820px;">For this project, I challenged myself to take an idea from concept to functional product within 1 week using AI-assisted development and my own frontend knowledge.</p>
@@ -125,7 +128,7 @@
 
       <section id="challenge" data-screen-label="03 Challenge" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
         <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px;">
-          <span style="color:#d9852a;font-weight:700;font-size:24px;font-family:'Poppins';">3</span>
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">3</span>
           <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Challenge</span>
         </div>
         <p style="margin:0 0 20px;color:#4d4a44;font-size:17px;line-height:1.5;">Use the project to develop 3 key areas:</p>
@@ -163,7 +166,7 @@
 
       <section id="workflow" data-screen-label="04 Workflow" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
         <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px;">
-          <span style="color:#d9852a;font-weight:700;font-size:24px;font-family:'Poppins';">4</span>
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">4</span>
           <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Workflow</span>
         </div>
 
@@ -185,7 +188,7 @@
 
         <div id="prototyping" style="scroll-margin-top:28px;margin-top:64px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
-            <span style="color:#d9852a;font-weight:700;font-size:18px;font-family:'Poppins';">4.1</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">4.1</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Prototyping</span>
           </div>
           <p style="margin:0;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">I first explored the app structure through an HTML wireframe, giving me a visual starting point before asking Claude Code to build the functional version.</p>
@@ -207,7 +210,7 @@
 
         <div id="prompting" style="scroll-margin-top:28px;margin-top:64px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
-            <span style="color:#d9852a;font-weight:700;font-size:18px;font-family:'Poppins';">4.2</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">4.2</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Prompting</span>
           </div>
           <p style="margin:0;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">I found that specific instructions produced more predictable results.</p>
@@ -237,7 +240,7 @@
 
         <div id="building" style="scroll-margin-top:28px;margin-top:64px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
-            <span style="color:#d9852a;font-weight:700;font-size:18px;font-family:'Poppins';">4.3</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">4.3</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Building</span>
           </div>
 
@@ -249,15 +252,15 @@
         </div>
       </section>
 
-      <section id="challenges" data-screen-label="05 Design Challenges" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+      <section id="challenges" data-screen-label="05 AI Design Challenges" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
         <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px;">
-          <span style="color:#d9852a;font-weight:700;font-size:24px;font-family:'Poppins';">5</span>
-          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Design Challenges</span>
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">5</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">AI Design Challenges</span>
         </div>
 
         <div id="specificity" style="scroll-margin-top:28px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
-            <span style="color:#d9852a;font-weight:700;font-size:18px;font-family:'Poppins';">5.1</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">5.1</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Specificity Matters</span>
           </div>
           <p style="margin:0;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">One of the biggest lessons was that AI can interpret visual and spatial instructions very differently depending on how specifically they are described.</p>
@@ -287,7 +290,7 @@
 
         <div id="testing" style="scroll-margin-top:28px;margin-top:64px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
-            <span style="color:#d9852a;font-weight:700;font-size:18px;font-family:'Poppins';">5.2</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">5.2</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Testing &amp; Troubleshooting</span>
           </div>
           <p style="margin:0;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">As the app developed, I used iterative testing to identify issues rather than waiting until the end.</p>
@@ -339,7 +342,7 @@
 
         <div id="tracking" style="scroll-margin-top:28px;margin-top:64px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
-            <span style="color:#d9852a;font-weight:700;font-size:18px;font-family:'Poppins';">5.3</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">5.3</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Tracking Changes</span>
           </div>
           <p style="margin:0 0 20px;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">While development with Claude was largely reliable, I learned that AI-generated solutions still need to be evaluated against the exact system response I intended.</p>
@@ -388,7 +391,7 @@
 
       <section id="reflection" data-screen-label="06 Project Reflection" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
         <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px;">
-          <span style="color:#d9852a;font-weight:700;font-size:24px;font-family:'Poppins';">6</span>
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">6</span>
           <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Project Reflection</span>
         </div>
 
@@ -424,7 +427,7 @@
             <div style="padding:18px 2px;border-top:1px solid #ece6db;">
               <div style="display:flex;gap:14px;align-items:center;margin-bottom:10px;">
                 <div style="flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:#e0f0ea;">
-                  <i data-lucide="eye" style="width:19px;height:19px;color:#1f8a6d;"></i>
+                  <i data-lucide="check" style="width:19px;height:19px;color:#1f8a6d;"></i>
                 </div>
                 <div style="font-weight:700;font-size:17px;color:#1a1a1a;">Understanding the output matters</div>
               </div>
@@ -460,13 +463,40 @@
         </div>
       </section>
 
+      <hr style="width:100%;border:none;border-top:1px solid #e7ddcb;margin:8px 0;" />
+
+      <div id="viewnext" style="margin-top:8px;">
+        <div data-viewnext-grid style="display:grid;grid-template-columns:1fr 1.15fr;gap:36px;align-items:center;">
+          <a href="EMR%20Case%20Study.dc.html" style="display:block;border-radius:24px;overflow:hidden;text-decoration:none;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#ffffff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
+            <img src="uploads/EMR%20Background%20cream-65d9fdc8.png" alt="East Midlands Railway case study" style="display:block;width:100%;height:auto;" />
+          </a>
+
+          <div style="text-align:left;">
+            <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.2;letter-spacing:-0.02em;color:#1a1a1a;">Let&rsquo;s build inclusive experiences for a global audience &#127757;</h2>
+            <div style="margin-top:22px;">
+              <button onClick="{{ copyEmail }}" style="{{ copyBtnStyle }}" style-hover="filter:brightness(0.95);">{{ copyBtnLabel }}</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;margin-top:20px;font-size:16px;font-weight:600;color:#1a1a1a;">
+              <a href="https://linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">LinkedIn</a>
+              <span style="color:#c9c1b2;">&middot;</span>
+              <a href="mailto:aafreenz@hotmail.co.uk" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Email</a>
+              <span style="color:#c9c1b2;">&middot;</span>
+              <a href="https://github.com/AZK-16" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">GitHub</a>
+              <span style="color:#c9c1b2;">&middot;</span>
+              <a href="#top" onClick="{{ backToTop }}" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Back to Top</a>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;margin:32px 0 0;font-size:13px;color:#8a8477;">Aafreen Zainab Kashif &copy; 2026</p>
+      </div>
+
     </main>
   </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { active: 'introduction', navCollapsed: true };
+  state = { active: 'introduction', navCollapsed: true, copied: false };
   sectionIds = ['introduction', 'context', 'challenge', 'workflow', 'prototyping', 'prompting', 'building', 'challenges', 'specificity', 'testing', 'tracking', 'reflection'];
 
   componentDidMount() {
@@ -565,6 +595,7 @@ class Component extends DCLogic {
     if (this.obs) this.obs.disconnect();
     if (this.revObs) this.revObs.disconnect();
     if (this._fallbackT) clearTimeout(this._fallbackT);
+    if (this._copyT) clearTimeout(this._copyT);
   }
 
   go(id) {
@@ -583,7 +614,7 @@ class Component extends DCLogic {
       ['4.1', 'Prototyping', 'prototyping', true],
       ['4.2', 'Prompting', 'prompting', true],
       ['4.3', 'Building', 'building', true],
-      ['5', 'Design Challenges', 'challenges', false],
+      ['5', 'AI Design Challenges', 'challenges', false],
       ['5.1', 'Specificity Matters', 'specificity', true],
       ['5.2', 'Testing & Troubleshooting', 'testing', true],
       ['5.3', 'Tracking Changes', 'tracking', true],
@@ -598,10 +629,10 @@ class Component extends DCLogic {
           display: 'flex', gap: sub ? '10px' : '12px', alignItems: 'center',
           padding: sub ? '7px 10px 7px 18px' : '8px 10px', borderRadius: '9px', cursor: 'pointer',
           transition: 'background .2s, transform .15s',
-          background: active ? '#f6ede0' : 'transparent',
+          background: active ? '#fbeef2' : 'transparent',
         },
         numStyle: {
-          color: active ? '#d9852a' : '#e3c19a', fontWeight: 700,
+          color: active ? '#b21e4a' : '#d99bae', fontWeight: 700,
           fontSize: sub ? '12px' : '13px', fontFamily: "'Poppins'",
           fontVariantNumeric: 'tabular-nums', transition: 'color .2s',
         },
@@ -631,7 +662,32 @@ class Component extends DCLogic {
     };
 
     const navHeaderMb = collapsed ? '0px' : '16px';
-    return { nav, tools, toggleNav, chevronStyle, navWrapStyle, navHeaderMb };
+
+    const linkOver = (e) => { e.currentTarget.style.color = '#b21e4a'; };
+    const linkOut = (e) => { e.currentTarget.style.color = '#1a1a1a'; };
+    const backToTop = (e) => { if (e && e.preventDefault) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    const copied = this.state.copied;
+    const copyEmail = () => {
+      const email = 'aafreenz@hotmail.co.uk';
+      const done = () => {
+        this.setState({ copied: true });
+        if (this._copyT) clearTimeout(this._copyT);
+        this._copyT = setTimeout(() => this.setState({ copied: false }), 4000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done).catch(() => {
+          try { const ta = document.createElement('textarea'); ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+          done();
+        });
+      } else {
+        try { const ta = document.createElement('textarea'); ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+        done();
+      }
+    };
+    const copyBtnLabel = copied ? 'Email Copied!' : 'Copy My Email';
+    const copyBtnStyle = 'appearance:none;border:0;cursor:pointer;font-family:\'DM Sans\',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#ffffff;padding:14px 30px;border-radius:999px;box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:background-color .3s ease, filter .2s ease;background:' + (copied ? '#20896E' : '#d9852a') + ';';
+
+    return { nav, tools, toggleNav, chevronStyle, navWrapStyle, navHeaderMb, linkOver, linkOut, backToTop, copyEmail, copyBtnLabel, copyBtnStyle };
   }
 }
 </script>
