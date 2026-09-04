@@ -48,7 +48,7 @@
         </div>
         <div style="{{ navWrapStyle }}">
         <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
-          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="7">
             <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
               <span style="{{ item.numStyle }}">{{ item.num }}</span>
               <span style="{{ item.labelStyle }}">{{ item.label }}</span>
@@ -226,6 +226,23 @@
         </div>
       </section>
 
+      <section id="process" data-screen-label="06 Design Process" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px;">
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">6</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Design Process</span>
+        </div>
+
+        <div id="planning" style="scroll-margin-top:28px;margin-top:30px;">
+          <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:18px;">
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.1</span>
+            <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Planning</span>
+          </div>
+          <div style="border:1px solid #ece6db;border-radius:14px;overflow:hidden;background:#faf9fc;">
+            <img src="uploads/SPONSA%20Landing%20Page%20Mind%20Map.png" alt="SPONSA landing page mind map" style="display:block;width:100%;height:auto;" />
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 </div>
@@ -233,7 +250,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { active: 'introduction', navCollapsed: true };
-  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights'];
+  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights', 'process', 'planning'];
 
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
@@ -344,15 +361,17 @@ class Component extends DCLogic {
       ['3', 'Challenge', 'challenge', false],
       ['4', 'Research', 'research', false],
       ['5', 'Key Insights', 'insights', false],
+      ['6', 'Design Process', 'process', false],
+      ['6.1', 'Planning', 'planning', true],
     ];
-    const nav = navData.map(([num, label, id]) => {
+    const nav = navData.map(([num, label, id, sub]) => {
       const active = this.state.active === id;
       return {
         num, label, id,
         onClick: () => this.go(id),
-        rootStyle: 'display:flex;gap:12px;align-items:center;padding:8px 10px;border-radius:9px;cursor:pointer;transition:background .2s, transform .15s;background:' + (active ? '#fbeef2' : 'transparent') + ';',
-        numStyle: 'color:' + (active ? '#b21e4a' : '#d99bae') + ';font-weight:700;font-size:13px;font-family:\'Poppins\';font-variant-numeric:tabular-nums;transition:color .2s;',
-        labelStyle: 'color:' + (active ? '#1a1a1a' : '#9b958d') + ';font-weight:' + (active ? '700' : '500') + ';font-size:15px;transition:color .2s, font-weight .2s;',
+        rootStyle: 'display:flex;gap:' + (sub ? '10px' : '12px') + ';align-items:center;padding:' + (sub ? '7px 10px 7px 18px' : '8px 10px') + ';border-radius:9px;cursor:pointer;transition:background .2s, transform .15s;background:' + (active ? '#fbeef2' : 'transparent') + ';',
+        numStyle: 'color:' + (active ? '#b21e4a' : '#d99bae') + ';font-weight:700;font-size:' + (sub ? '12px' : '13px') + ';font-family:\'Poppins\';font-variant-numeric:tabular-nums;transition:color .2s;',
+        labelStyle: 'color:' + (active ? '#1a1a1a' : '#9b958d') + ';font-weight:' + (active ? '700' : '500') + ';font-size:' + (sub ? '13.5px' : '15px') + ';transition:color .2s, font-weight .2s;',
       };
     });
 
