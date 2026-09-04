@@ -48,7 +48,7 @@
         </div>
         <div style="{{ navWrapStyle }}">
         <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
-          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="3">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
             <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
               <span style="{{ item.numStyle }}">{{ item.num }}</span>
               <span style="{{ item.labelStyle }}">{{ item.label }}</span>
@@ -142,6 +142,90 @@
         </div>
       </section>
 
+      <section id="research" data-screen-label="04 Research" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px;">
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">4</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Research</span>
+        </div>
+        <p style="margin:0 0 16px;color:#4d4a44;font-size:19px;line-height:1.55;max-width:820px;">To better understand how users perceived SPONSA, I conducted 7 user interviews alongside my QA work on the platform.</p>
+        <p style="margin:0;color:#4d4a44;font-size:19px;line-height:1.55;max-width:820px;">I looked at how users understood the product, what information helped them trust the platform, and where the landing page could communicate its value more effectively.</p>
+      </section>
+
+      <section id="insights" data-screen-label="05 Key Insights" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px;">
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">5</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Key Insights</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:22px;">
+          <div style="border:1px solid #ece6db;border-radius:20px;padding:28px 30px;">
+            <div style="display:flex;gap:16px;align-items:center;margin-bottom:22px;">
+              <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#ece9fb;">
+                <i data-lucide="route" style="width:21px;height:21px;color:#6d4fd6;"></i>
+              </div>
+              <div>
+                <div style="color:#6d4fd6;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Insight 1</div>
+                <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Keep the story simple</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+              <div style="background:#fbf9f5;border-radius:14px;padding:20px 22px;">
+                <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Evidence</div>
+                <div style="color:#4d4a44;font-size:16px;line-height:1.55;">Users wanted to <strong style="color:#b21e4a;font-weight:700;">quickly understand what sets SPONSA apart</strong> from other creator platforms, with information that was consistent with the product details outlined in the FAQs.</div>
+              </div>
+              <div style="background:#ecf6f0;border-radius:14px;padding:20px 22px;">
+                <div style="color:#1f8a6d;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Design Implication</div>
+                <div style="color:#4d4a44;font-size:16px;line-height:1.55;">I explored a simple <strong style="color:#1f8a6d;font-weight:700;">3-step narrative (Problem - Solution - Main Use Case)</strong> to guide users from discovering a creator to contributing towards their goals.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border:1px solid #ece6db;border-radius:20px;padding:28px 30px;">
+            <div style="display:flex;gap:16px;align-items:center;margin-bottom:22px;">
+              <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#ece9fb;">
+                <i data-lucide="palette" style="width:21px;height:21px;color:#6d4fd6;"></i>
+              </div>
+              <div>
+                <div style="color:#6d4fd6;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Insight 2</div>
+                <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Strengthen brand alignment</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+              <div style="background:#fbf9f5;border-radius:14px;padding:20px 22px;">
+                <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Evidence</div>
+                <div style="color:#4d4a44;font-size:16px;line-height:1.55;">One user described the current landing page as looking "<strong style="color:#b21e4a;font-weight:700;">alpha-stage in its appearance</strong>" and it could be "<strong style="color:#b21e4a;font-weight:700;">more fun and less corporate</strong>".</div>
+              </div>
+              <div style="background:#ecf6f0;border-radius:14px;padding:20px 22px;">
+                <div style="color:#1f8a6d;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Design Implication</div>
+                <div style="color:#4d4a44;font-size:16px;line-height:1.55;">I used the redesign as an opportunity to create <strong style="color:#1f8a6d;font-weight:700;">custom graphics</strong> that align with SPONSA's <strong style="color:#1f8a6d;font-weight:700;">vibrant brand personality</strong>.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border:1px solid #ece6db;border-radius:20px;padding:28px 30px;">
+            <div style="display:flex;gap:16px;align-items:center;margin-bottom:22px;">
+              <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#ece9fb;">
+                <i data-lucide="credit-card" style="width:21px;height:21px;color:#6d4fd6;"></i>
+              </div>
+              <div>
+                <div style="color:#6d4fd6;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Insight 3</div>
+                <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Emphasise connection with trusted payment providers</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+              <div style="background:#fbf9f5;border-radius:14px;padding:20px 22px;">
+                <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Evidence</div>
+                <div style="color:#4d4a44;font-size:16px;line-height:1.55;">Users wanted to see a <strong style="color:#b21e4a;font-weight:700;">clear connection between SPONSA and its payment providers</strong>, with payment information remaining consistent with the details provided in the FAQs.</div>
+              </div>
+              <div style="background:#ecf6f0;border-radius:14px;padding:20px 22px;">
+                <div style="color:#1f8a6d;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Design Implication</div>
+                <div style="color:#4d4a44;font-size:16px;line-height:1.55;">Showing <strong style="color:#1f8a6d;font-weight:700;">logos of recognised payment providers such as PayPal</strong> as a subtle trust signal could help users feel more confident about contributing.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 </div>
@@ -149,7 +233,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { active: 'introduction', navCollapsed: true };
-  sectionIds = ['introduction', 'context', 'challenge'];
+  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights'];
 
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
@@ -258,6 +342,8 @@ class Component extends DCLogic {
       ['1', 'Introduction', 'introduction', false],
       ['2', 'Context', 'context', false],
       ['3', 'Challenge', 'challenge', false],
+      ['4', 'Research', 'research', false],
+      ['5', 'Key Insights', 'insights', false],
     ];
     const nav = navData.map(([num, label, id]) => {
       const active = this.state.active === id;
