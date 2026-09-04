@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#f5f1e9;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1a1a1a;}
+  ::selection{background:#f7d6e0;}
+  @keyframes heroRise{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+  @media (max-width: 980px){
+    [data-sp-page]{padding:0 !important;}
+    [data-sp-grid]{grid-template-columns:1fr !important;gap:22px !important;max-width:none !important;padding:0 16px 60px !important;}
+    [data-sp-aside]{position:sticky !important;top:0 !important;z-index:50;align-self:stretch !important;margin:0 -16px !important;padding:16px 16px 14px !important;background:#f5f1e9;border-bottom:1px solid #e7ddcb;box-shadow:0 8px 20px rgba(74,30,46,0.06);gap:12px !important;}
+    [data-sp-h1]{font-size:36px !important;}
+  }
+  @media (max-width: 640px){
+    [data-sp-main] > section{padding:30px 20px !important;}
+    [data-hero-bleed]{margin:20px 0 0 !important;padding:0 !important;}
+    [data-sp-h1]{font-size:30px !important;}
+  }
+</style>
+</helmet>
+
+<div data-sp-page style="min-height:100vh;background:#f5f1e9;padding:28px 24px 80px;">
+  <div data-sp-grid style="max-width:1190px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:30px;align-items:start;">
+
+    <aside data-sp-aside style="position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:14px;">
+      <a href="Home.dc.html" style="display:inline-flex;align-items:center;gap:9px;background:#ffffff;border:1px solid #efeae1;border-radius:999px;padding:10px 18px 10px 14px;text-decoration:none;color:#b21e4a;font-weight:700;font-size:14px;font-family:'Poppins';box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:transform .22s ease, box-shadow .22s ease, background .22s ease;align-self:flex-start;" style-hover="transform:translateX(-3px);box-shadow:0 6px 18px rgba(74,30,46,0.12);background:#fdfbf7;">
+        <i data-lucide="arrow-left" style="width:17px;height:17px;color:#b21e4a;"></i>Back to home
+      </a>
+      <div style="background:#ffffff;border:1px solid #efeae1;border-radius:20px;padding:22px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+        <div onClick="{{ toggleNav }}" title="Toggle menu" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:{{ navHeaderMb }};transition:margin-bottom .42s cubic-bezier(.22,1,.36,1);border-radius:8px;" style-hover="opacity:0.85;">
+          <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Poppins';">Contents</div>
+          <div style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;">
+            <span style="{{ chevronStyle }}"><i data-lucide="chevron-down" style="width:18px;height:18px;color:#b21e4a;display:block;"></i></span>
+          </div>
+        </div>
+        <div style="{{ navWrapStyle }}">
+        <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="3">
+            <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
+              <span style="{{ item.numStyle }}">{{ item.num }}</span>
+              <span style="{{ item.labelStyle }}">{{ item.label }}</span>
+            </div>
+          </sc-for>
+        </nav>
+        </div>
+      </div>
+    </aside>
+
+    <main data-sp-main style="display:flex;flex-direction:column;gap:28px;min-width:0;">
+
+      <section id="introduction" data-screen-label="01 Introduction" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:46px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);overflow:hidden;">
+
+        <h1 data-sp-h1 style="font-family:'Poppins';font-weight:800;font-size:46px;line-height:1.05;letter-spacing:-0.025em;margin:24px 0 0;color:#171717;text-align:center;">Elevating SPONSA&rsquo;s Brand Identity &amp; Engagement</h1>
+
+        <div data-hero-bleed style="position:relative;margin:34px -48px 0;padding:0 48px;">
+          <img data-hero-shot src="uploads/SPONSA%20Landing%20Page%201.png" alt="Redesigned SPONSA landing page" style="width:100%;height:auto;display:block;border-radius:14px 14px 0 0;border:1px solid #ece6db;border-bottom:none;" />
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px;">
+          <div style="background:#fbf9f5;border:1px solid #ece6db;border-radius:18px;padding:26px 28px;">
+            <div style="color:#b21e4a;font-weight:700;font-size:17px;margin-bottom:12px;">The Challenge</div>
+            <div style="color:#4d4a44;font-size:18px;line-height:1.5;">SPONSA&rsquo;s landing page needed to better communicate its unique value proposition, build trust with new users, and create a visual experience that reflected its vibrant brand identity.</div>
+          </div>
+          <div style="background:#ecf6f0;border:1px solid #d3e8dd;border-radius:18px;padding:26px 28px;">
+            <div style="color:#1f8a6d;font-weight:700;font-size:17px;margin-bottom:12px;">The Outcome</div>
+            <div style="color:#4d4a44;font-size:18px;line-height:1.5;">Redesigned SPONSA&rsquo;s landing page to create a more cohesive, modern and engaging brand experience, while clearly communicating its multi-goal tipping model to creators and their supporters.</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid #ece6db;border-radius:16px;display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:24px;overflow:hidden;">
+          <div style="display:flex;align-items:center;gap:12px;padding:20px 22px;border-right:1px solid #ece6db;">
+            <i data-lucide="sparkles" style="width:20px;height:20px;color:#4a5fc4;flex:0 0 auto;"></i>
+            <span style="font-weight:600;font-size:15px;color:#2a2a2a;">Domain: Content Creation</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:20px 22px;border-right:1px solid #ece6db;">
+            <i data-lucide="clock" style="width:20px;height:20px;color:#d9852a;flex:0 0 auto;"></i>
+            <span style="font-weight:600;font-size:15px;color:#2a2a2a;">Time to Results: 3 months</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:20px 22px;">
+            <i data-lucide="user" style="width:20px;height:20px;color:#1f8a6d;flex:0 0 auto;"></i>
+            <span style="font-weight:600;font-size:15px;color:#2a2a2a;line-height:1.3;">Role: UI/UX Designer &amp; QA Specialist</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="context" data-screen-label="02 Context" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px;">
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">2</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Context</span>
+        </div>
+        <p style="margin:0;color:#4d4a44;font-size:19px;line-height:1.55;max-width:820px;">SPONSA is a platform that enables fans to contribute to multiple tipping goals from their favourite creators, offering a more flexible alternative to traditional tipping platforms built around a single goal.</p>
+      </section>
+
+      <section id="challenge" data-screen-label="03 Challenge" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px;">
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">3</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Challenge</span>
+        </div>
+        <p style="margin:0 0 20px;color:#4d4a44;font-size:17px;line-height:1.5;">SPONSA&rsquo;s landing page should therefore be:</p>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:18px;align-items:flex-start;background:#fbf9f5;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
+            <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#fbeede;">
+              <i data-lucide="eye" style="width:21px;height:21px;color:#d9852a;"></i>
+            </div>
+            <div>
+              <div style="color:#d9852a;font-weight:700;font-size:17px;margin-bottom:5px;">Clear</div>
+              <div style="color:#4d4a44;font-size:16px;line-height:1.5;">Help visitors quickly understand what SPONSA does, who it is for, and what makes its tipping model different.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:18px;align-items:flex-start;background:#fbf9f5;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
+            <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#ece9fb;">
+              <i data-lucide="shield-check" style="width:21px;height:21px;color:#6d4fd6;"></i>
+            </div>
+            <div>
+              <div style="color:#6d4fd6;font-weight:700;font-size:17px;margin-bottom:5px;">Trustworthy</div>
+              <div style="color:#4d4a44;font-size:16px;line-height:1.5;">As a platform handling monetary contributions, the landing page needed to communicate legitimacy and make the experience feel reliable.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:18px;align-items:flex-start;background:#fbf9f5;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
+            <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#e0f0ea;">
+              <i data-lucide="palette" style="width:21px;height:21px;color:#1f8a6d;"></i>
+            </div>
+            <div>
+              <div style="color:#1f8a6d;font-weight:700;font-size:17px;margin-bottom:5px;">On Brand</div>
+              <div style="color:#4d4a44;font-size:16px;line-height:1.5;">Create a vibrant and contemporary visual experience that felt relevant to SPONSA&rsquo;s creator-focused and Gen Z audience.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { active: 'introduction', navCollapsed: true };
+  sectionIds = ['introduction', 'context', 'challenge'];
+
+  componentDidMount() {
+    const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
+    tryIcons();
+
+    const heroShots = Array.from(document.querySelectorAll('[data-hero-shot]'));
+    heroShots.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.willChange = 'opacity, transform';
+      const anim = el.animate(
+        [ { opacity: 0, transform: 'translateY(42px)' }, { opacity: 1, transform: 'translateY(0)' } ],
+        { duration: 900, delay: 150 + i * 170, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'both' }
+      );
+      anim.onfinish = () => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; try { anim.cancel(); } catch (e) {} };
+    });
+    setTimeout(() => { heroShots.forEach(el => { if (getComputedStyle(el).opacity === '0') { el.getAnimations().forEach(a => { try { a.cancel(); } catch (e) {} }); el.style.opacity = '1'; el.style.transform = 'translateY(0)'; } }); }, 1600);
+
+    this.obs = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting);
+      if (visible.length) {
+        visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        this.setState({ active: visible[0].target.id });
+      }
+    }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+    this.sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) this.obs.observe(el);
+    });
+
+    const cards = Array.from(document.querySelectorAll('section[data-screen-label]'));
+    cards.forEach(el => {
+      el.style.opacity = '0';
+      el.style.willChange = 'opacity, transform';
+      el.__revealed = false;
+    });
+
+    const reveal = (el) => {
+      if (el.__revealed) return;
+      el.__revealed = 'pending';
+      const anim = el.animate(
+        [
+          { opacity: 0, transform: 'translateY(26px)' },
+          { opacity: 1, transform: 'translateY(0)' },
+        ],
+        { duration: 650, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' }
+      );
+      anim.onfinish = () => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+        try { anim.cancel(); } catch (e) {}
+        el.__revealed = true;
+      };
+    };
+
+    this.revObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          reveal(e.target);
+          this.revObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -18% 0px' });
+    cards.forEach(el => this.revObs.observe(el));
+
+    const revealInView = () => {
+      cards.forEach(el => {
+        if (!el.__revealed && el.getBoundingClientRect().top < window.innerHeight - 40) {
+          reveal(el);
+          this.revObs.unobserve(el);
+        }
+      });
+    };
+    requestAnimationFrame(revealInView);
+
+    const forceShow = (el) => {
+      el.getAnimations().forEach(a => { try { a.cancel(); } catch (e) {} });
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+      el.__revealed = true;
+    };
+    this._fallbackT = setTimeout(() => {
+      cards.forEach(el => {
+        if (el.__revealed !== true && el.getBoundingClientRect().top < window.innerHeight - 40) {
+          forceShow(el); this.revObs.unobserve(el);
+        }
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    if (this._fallbackT) clearTimeout(this._fallbackT);
+    if (this.obs) this.obs.disconnect();
+    if (this.revObs) this.revObs.disconnect();
+  }
+
+  go(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    this.setState({ active: id });
+    const top = el.getBoundingClientRect().top + window.scrollY - 28;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  renderVals() {
+    const navData = [
+      ['1', 'Introduction', 'introduction', false],
+      ['2', 'Context', 'context', false],
+      ['3', 'Challenge', 'challenge', false],
+    ];
+    const nav = navData.map(([num, label, id]) => {
+      const active = this.state.active === id;
+      return {
+        num, label, id,
+        onClick: () => this.go(id),
+        rootStyle: 'display:flex;gap:12px;align-items:center;padding:8px 10px;border-radius:9px;cursor:pointer;transition:background .2s, transform .15s;background:' + (active ? '#fbeef2' : 'transparent') + ';',
+        numStyle: 'color:' + (active ? '#b21e4a' : '#d99bae') + ';font-weight:700;font-size:13px;font-family:\'Poppins\';font-variant-numeric:tabular-nums;transition:color .2s;',
+        labelStyle: 'color:' + (active ? '#1a1a1a' : '#9b958d') + ';font-weight:' + (active ? '700' : '500') + ';font-size:15px;transition:color .2s, font-weight .2s;',
+      };
+    });
+
+    const collapsed = this.state.navCollapsed;
+    const toggleNav = () => this.setState({ navCollapsed: !this.state.navCollapsed });
+    const chevronStyle = 'display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.22,1,.36,1);transform:' + (collapsed ? 'rotate(0deg)' : 'rotate(180deg)') + ';';
+    const navWrapStyle = 'overflow-x:hidden;overflow-y:' + (collapsed ? 'hidden' : 'auto') + ';transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (collapsed ? '0px' : 'calc(100vh - 150px)') + ';opacity:' + (collapsed ? 0 : 1) + ';';
+    const navHeaderMb = collapsed ? '0px' : '16px';
+
+    return { nav, toggleNav, chevronStyle, navWrapStyle, navHeaderMb };
+  }
+}
+</script>
+</body>
+</html>
