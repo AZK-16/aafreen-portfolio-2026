@@ -235,12 +235,18 @@
                   <i data-lucide="arrow-right" style="width:20px;height:20px;color:#1a1a1a;transition:transform .3s ease;"></i>
                 </button>
               </div>
-              <div data-gallery-grid style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-                <sc-for list="{{ visibleGalleryImages }}" as="img" hint-placeholder-count="3">
-                  <div onClick="{{ img.onClick }}" style="cursor:pointer;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid #ece6db;transition:transform .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-4px);box-shadow:0 12px 26px rgba(74,30,46,0.16);">
-                    <img src="{{ img.src }}" alt="{{ img.alt }}" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;" />
-                  </div>
-                </sc-for>
+              <div style="overflow:hidden;">
+                <div style="display:flex;width:{{ galleryTrackWidth }}%;transform:translateX({{ galleryTrackOffset }}%);transition:{{ galleryTrackTransition }};">
+                  <sc-for list="{{ galleryPages }}" as="page" hint-placeholder-count="2">
+                    <div data-gallery-grid style="flex:0 0 {{ galleryPageBasis }}%;min-width:0;box-sizing:border-box;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+                      <sc-for list="{{ page.images }}" as="img" hint-placeholder-count="3">
+                        <div onClick="{{ img.onClick }}" style="cursor:pointer;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid #ece6db;transition:transform .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-4px);box-shadow:0 12px 26px rgba(74,30,46,0.16);">
+                          <img src="{{ img.src }}" alt="{{ img.alt }}" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;" />
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
               </div>
             </div>
 
@@ -336,7 +342,8 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryPage: 0 };
+  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryTrackIndex: 0, galleryInstant: false };
+  galleryTransitionMs = 900;
   sectionIds = ['emr','about','experience','value'];
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
@@ -402,6 +409,7 @@ class Component extends DCLogic {
     if (this.revObs) this.revObs.disconnect();
     if (this._fallbackT) clearTimeout(this._fallbackT);
     if (this._copyT) clearTimeout(this._copyT);
+    if (this._galleryResetT) clearTimeout(this._galleryResetT);
   }
   componentDidUpdate() {
     if (window.lucide) window.lucide.createIcons();
@@ -512,16 +520,38 @@ class Component extends DCLogic {
     });
     const galleryPageSize = 3;
     const galleryPageCount = Math.ceil(galleryImages.length / galleryPageSize);
-    const galleryPage = this.state.galleryPage % galleryPageCount;
-    const visibleGalleryImages = galleryImages.slice(galleryPage * galleryPageSize, galleryPage * galleryPageSize + galleryPageSize);
-    const nextGalleryPage = () => this.setState({ galleryPage: (galleryPage + 1) % galleryPageCount });
+    const realPages = [];
+    for (let p = 0; p < galleryPageCount; p++) {
+      realPages.push({ images: galleryImages.slice(p * galleryPageSize, p * galleryPageSize + galleryPageSize) });
+    }
+    // Append a clone of the first page so "next" past the last page keeps sliding
+    // in the same direction; once the clone finishes animating in, we snap the
+    // track back to the real first page with transitions off (invisible jump).
+    const galleryPages = realPages.concat([realPages[0]]);
+    const slideCount = galleryPages.length;
+    const galleryTrackIndex = this.state.galleryTrackIndex;
+    const galleryPageBasis = 100 / slideCount;
+    const galleryTrackWidth = slideCount * 100;
+    const galleryTrackOffset = -(galleryTrackIndex * galleryPageBasis);
+    const galleryTrackTransition = this.state.galleryInstant ? 'none' : 'transform ' + (this.galleryTransitionMs / 1000) + 's cubic-bezier(.22,1,.36,1)';
+    const nextGalleryPage = () => {
+      const next = this.state.galleryTrackIndex + 1;
+      this.setState({ galleryTrackIndex: next, galleryInstant: false });
+      if (next === galleryPageCount) {
+        if (this._galleryResetT) clearTimeout(this._galleryResetT);
+        this._galleryResetT = setTimeout(() => {
+          this.setState({ galleryTrackIndex: 0, galleryInstant: true });
+          requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ galleryInstant: false })));
+        }, this.galleryTransitionMs + 20);
+      }
+    };
     const lightboxOpen = this.state.lightboxOpen;
     const lightboxSrc = this.state.lightboxSrc;
     const lightboxAlt = this.state.lightboxAlt;
     const closeLightbox = () => this.setState({ lightboxOpen: false });
     const stopPropagation = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
 
-    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle, galleryImages, visibleGalleryImages, nextGalleryPage, lightboxOpen, lightboxSrc, lightboxAlt, closeLightbox, stopPropagation };
+    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle, galleryPages, galleryPageBasis, galleryTrackWidth, galleryTrackOffset, galleryTrackTransition, nextGalleryPage, lightboxOpen, lightboxSrc, lightboxAlt, closeLightbox, stopPropagation };
   }
 }
 </script>
