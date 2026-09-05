@@ -48,7 +48,7 @@
         </div>
         <div style="{{ navWrapStyle }}">
         <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
-          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="11">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="12">
             <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
               <span style="{{ item.numStyle }}">{{ item.num }}</span>
               <span style="{{ item.labelStyle }}">{{ item.label }}</span>
@@ -335,6 +335,65 @@
         </div>
       </section>
 
+      <section id="reflection" data-screen-label="07 Project Reflection" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:42px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px;">
+          <span style="color:#b21e4a;font-weight:700;font-size:24px;font-family:'Poppins';">7</span>
+          <span style="color:#1a1a1a;font-weight:700;font-size:30px;font-family:'Poppins';letter-spacing:-0.01em;">Project Reflection</span>
+        </div>
+
+        <div style="border:1px solid #ece6db;border-radius:20px;padding:28px 30px;">
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#fbeede;">
+              <i data-lucide="palette" style="width:21px;height:21px;color:#d9852a;"></i>
+            </div>
+            <div>
+              <div style="color:#d9852a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Constraint</div>
+              <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Maintaining Visual Consistency</div>
+            </div>
+          </div>
+          <p style="margin:20px 0 0;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">Create new visual assets for the landing page while ensuring they remained cohesive with the rest of SPONSA&rsquo;s website.</p>
+        </div>
+
+        <div style="border:1px solid #ece6db;border-radius:20px;padding:28px 30px;margin-top:22px;">
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#fbeede;">
+              <i data-lucide="flask-conical" style="width:21px;height:21px;color:#d9852a;"></i>
+            </div>
+            <div>
+              <div style="color:#d9852a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Constraint</div>
+              <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Limited Post-Redesign Testing</div>
+            </div>
+          </div>
+          <p style="margin:20px 0 0;color:#4d4a44;font-size:17px;line-height:1.55;max-width:840px;">Due to project constraints, there was limited opportunity to conduct structured usability testing after the redesign and quantitatively compare conversion against the previous experience.</p>
+        </div>
+
+        <div style="border:1px solid #ece6db;border-radius:20px;padding:28px 30px;margin-top:22px;">
+          <div style="display:flex;gap:16px;align-items:center;margin-bottom:22px;">
+            <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#e0f0ea;">
+              <i data-lucide="refresh-cw" style="width:21px;height:21px;color:#1f8a6d;"></i>
+            </div>
+            <div>
+              <div style="color:#1f8a6d;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Improvements</div>
+              <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">What I&rsquo;d Do Differently Next Time</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;">
+            <div style="display:flex;gap:14px;align-items:center;padding:18px 2px;">
+              <div style="flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:#ece9fb;">
+                <i data-lucide="book-open" style="width:19px;height:19px;color:#6d4fd6;"></i>
+              </div>
+              <span style="color:#3f3d38;font-size:16.5px;line-height:1.5;">Create reusable guidelines for future page designs as more assets were developed</span>
+            </div>
+            <div style="display:flex;gap:14px;align-items:center;padding:18px 2px;border-top:1px solid #ece6db;">
+              <div style="flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:#fbeede;">
+                <i data-lucide="bar-chart-3" style="width:19px;height:19px;color:#d9852a;"></i>
+              </div>
+              <span style="color:#3f3d38;font-size:16.5px;line-height:1.5;">Use quantitative conversion data to better evaluate impact</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 </div>
@@ -342,7 +401,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { active: 'introduction', navCollapsed: true };
-  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights', 'process', 'planning', 'graphics', 'wireframes', 'finaldesign', 'impact'];
+  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights', 'process', 'planning', 'graphics', 'wireframes', 'finaldesign', 'impact', 'reflection'];
 
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
@@ -459,6 +518,7 @@ class Component extends DCLogic {
       ['6.3', 'Wireframes', 'wireframes', true],
       ['6.4', 'Final Design', 'finaldesign', true],
       ['6.5', 'Impact', 'impact', true],
+      ['7', 'Project Reflection', 'reflection', false],
     ];
     const nav = navData.map(([num, label, id, sub]) => {
       const active = this.state.active === id;
