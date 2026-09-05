@@ -48,7 +48,7 @@
         </div>
         <div style="{{ navWrapStyle }}">
         <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
-          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="12">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="11">
             <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
               <span style="{{ item.numStyle }}">{{ item.num }}</span>
               <span style="{{ item.labelStyle }}">{{ item.label }}</span>
@@ -285,20 +285,9 @@
           </div>
         </div>
 
-        <div id="wireframes" style="scroll-margin-top:28px;margin-top:34px;">
-          <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:18px;">
-            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.3</span>
-            <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Developing Wireframes</span>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-            <div style="aspect-ratio:4/3;border:1px dashed #d8cdb8;border-radius:14px;background:#faf9fc;"></div>
-            <div style="aspect-ratio:4/3;border:1px dashed #d8cdb8;border-radius:14px;background:#faf9fc;"></div>
-          </div>
-        </div>
-
         <div id="finaldesign" style="scroll-margin-top:28px;margin-top:34px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:18px;">
-            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.4</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.3</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Final Design</span>
           </div>
           <div style="border:1px solid #ece6db;border-radius:14px;overflow:hidden;background:#faf9fc;">
@@ -308,7 +297,7 @@
 
         <div id="impact" style="scroll-margin-top:28px;margin-top:34px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:18px;">
-            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.5</span>
+            <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.4</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Impact</span>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;">
@@ -403,7 +392,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { active: 'introduction', navCollapsed: true };
-  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights', 'process', 'planning', 'graphics', 'wireframes', 'finaldesign', 'impact', 'reflection'];
+  sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights', 'process', 'planning', 'graphics', 'finaldesign', 'impact', 'reflection'];
 
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
@@ -550,9 +539,8 @@ class Component extends DCLogic {
       ['6', 'Design Process', 'process', false],
       ['6.1', 'Planning', 'planning', true],
       ['6.2', 'Assets', 'graphics', true],
-      ['6.3', 'Wireframes', 'wireframes', true],
-      ['6.4', 'Final Design', 'finaldesign', true],
-      ['6.5', 'Impact', 'impact', true],
+      ['6.3', 'Final Design', 'finaldesign', true],
+      ['6.4', 'Impact', 'impact', true],
       ['7', 'Project Reflection', 'reflection', false],
     ];
     const nav = navData.map(([num, label, id, sub]) => {
