@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="./case-studies.js"></script>
 </head>
 <body>
 <x-dc>
@@ -525,8 +526,8 @@
 
       <div id="viewnext" style="margin-top:8px;">
         <div data-viewnext-grid style="display:grid;grid-template-columns:1fr 1.15fr;gap:36px;align-items:center;">
-          <a href="Time%20Capsule%20Case%20Study.dc.html" style="display:block;border-radius:24px;overflow:hidden;text-decoration:none;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#ffffff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
-            <img src="uploads/time-capsule.png" alt="Time Capsule App case study" style="display:block;width:100%;height:auto;" />
+          <a href="{{ nextHref }}" style="display:block;border-radius:24px;overflow:hidden;text-decoration:none;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#ffffff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
+            <img src="{{ nextCover }}" alt="{{ nextAlt }}" style="display:block;width:100%;height:auto;" />
           </a>
 
           <div style="text-align:left;">
@@ -797,7 +798,15 @@ class Component extends DCLogic {
     const copyBtnLabel = copied ? 'Email Copied!' : 'Copy My Email';
     const copyBtnStyle = 'appearance:none;border:0;cursor:pointer;font-family:\'DM Sans\',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#ffffff;padding:14px 30px;border-radius:999px;box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:background-color .3s ease, filter .2s ease;background:' + (copied ? '#20896E' : '#d9852a') + ';';
 
-    return { nav, rows, resultPoints, quotes, toggleNav, chevronStyle, navWrapStyle, navHeaderMb, linkOver, linkOut, backToTop, copyEmail, copyBtnLabel, copyBtnStyle };
+    const CASE_STUDIES = (typeof window !== 'undefined' && window.CASE_STUDIES) || [];
+    const currentFile = (() => { try { return decodeURIComponent(location.pathname.split('/').pop()); } catch (e) { return ''; } })();
+    const csIdx = CASE_STUDIES.findIndex(cs => cs.url === currentFile);
+    const nextCase = csIdx >= 0 ? CASE_STUDIES[(csIdx + 1) % CASE_STUDIES.length] : null;
+    const nextHref = nextCase ? encodeURI(nextCase.url) : '#';
+    const nextCover = nextCase ? nextCase.cover : '';
+    const nextAlt = nextCase ? nextCase.alt : '';
+
+    return { nav, rows, resultPoints, quotes, toggleNav, chevronStyle, navWrapStyle, navHeaderMb, linkOver, linkOut, backToTop, copyEmail, copyBtnLabel, copyBtnStyle, nextHref, nextCover, nextAlt };
   }
 }
 </script>

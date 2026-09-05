@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="./case-studies.js"></script>
 </head>
 <body>
 <x-dc>
@@ -23,6 +24,9 @@
     [data-sp-grid]{grid-template-columns:1fr !important;gap:22px !important;max-width:none !important;padding:0 16px 60px !important;}
     [data-sp-aside]{position:sticky !important;top:0 !important;z-index:50;align-self:stretch !important;margin:0 -16px !important;padding:16px 16px 14px !important;background:#f5f1e9;border-bottom:1px solid #e7ddcb;box-shadow:0 8px 20px rgba(74,30,46,0.06);gap:12px !important;}
     [data-sp-h1]{font-size:36px !important;}
+  }
+  @media (max-width: 760px){
+    [data-viewnext-grid]{grid-template-columns:1fr !important;gap:26px !important;}
   }
   @media (max-width: 640px){
     [data-sp-main] > section{padding:30px 20px !important;}
@@ -385,13 +389,40 @@
         </div>
       </section>
 
+      <hr style="width:100%;border:none;border-top:1px solid #e7ddcb;margin:8px 0;" />
+
+      <div id="viewnext" style="margin-top:8px;">
+        <div data-viewnext-grid style="display:grid;grid-template-columns:1fr 1.15fr;gap:36px;align-items:center;">
+          <a href="{{ nextHref }}" style="display:block;border-radius:24px;overflow:hidden;text-decoration:none;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#ffffff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
+            <img src="{{ nextCover }}" alt="{{ nextAlt }}" style="display:block;width:100%;height:auto;" />
+          </a>
+
+          <div style="text-align:left;">
+            <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.2;letter-spacing:-0.02em;color:#1a1a1a;">Let&rsquo;s build inclusive experiences for a global audience &#127757;</h2>
+            <div style="margin-top:22px;">
+              <button onClick="{{ copyEmail }}" style="{{ copyBtnStyle }}" style-hover="filter:brightness(0.95);">{{ copyBtnLabel }}</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;margin-top:20px;font-size:16px;font-weight:600;color:#1a1a1a;">
+              <a href="https://linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">LinkedIn</a>
+              <span style="color:#c9c1b2;">&middot;</span>
+              <a href="mailto:aafreenz@hotmail.co.uk" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Email</a>
+              <span style="color:#c9c1b2;">&middot;</span>
+              <a href="https://github.com/AZK-16" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">GitHub</a>
+              <span style="color:#c9c1b2;">&middot;</span>
+              <a href="#top" onClick="{{ backToTop }}" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Back to Top</a>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;margin:32px 0 0;font-size:13px;color:#8a8477;">Aafreen Zainab Kashif &copy; 2026</p>
+      </div>
+
     </main>
   </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { active: 'introduction', navCollapsed: true };
+  state = { active: 'introduction', navCollapsed: true, copied: false };
   sectionIds = ['introduction', 'context', 'challenge', 'research', 'insights', 'process', 'planning', 'graphics', 'finaldesign', 'impact', 'reflection'];
 
   componentDidMount() {
@@ -519,6 +550,7 @@ class Component extends DCLogic {
     if (this.obs) this.obs.disconnect();
     if (this.revObs) this.revObs.disconnect();
     if (this._sliderCleanup) this._sliderCleanup();
+    if (this._copyT) clearTimeout(this._copyT);
   }
 
   go(id) {
@@ -560,7 +592,39 @@ class Component extends DCLogic {
     const navWrapStyle = 'overflow-x:hidden;overflow-y:' + (collapsed ? 'hidden' : 'auto') + ';transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (collapsed ? '0px' : 'calc(100vh - 150px)') + ';opacity:' + (collapsed ? 0 : 1) + ';';
     const navHeaderMb = collapsed ? '0px' : '16px';
 
-    return { nav, toggleNav, chevronStyle, navWrapStyle, navHeaderMb };
+    const linkOver = (e) => { e.currentTarget.style.color = '#b21e4a'; };
+    const linkOut = (e) => { e.currentTarget.style.color = '#1a1a1a'; };
+    const backToTop = (e) => { if (e && e.preventDefault) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    const copied = this.state.copied;
+    const copyEmail = () => {
+      const email = 'aafreenz@hotmail.co.uk';
+      const done = () => {
+        this.setState({ copied: true });
+        if (this._copyT) clearTimeout(this._copyT);
+        this._copyT = setTimeout(() => this.setState({ copied: false }), 4000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done).catch(() => {
+          try { const ta = document.createElement('textarea'); ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+          done();
+        });
+      } else {
+        try { const ta = document.createElement('textarea'); ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+        done();
+      }
+    };
+    const copyBtnLabel = copied ? 'Email Copied!' : 'Copy My Email';
+    const copyBtnStyle = 'appearance:none;border:0;cursor:pointer;font-family:\'DM Sans\',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#ffffff;padding:14px 30px;border-radius:999px;box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:background-color .3s ease, filter .2s ease;background:' + (copied ? '#20896E' : '#d9852a') + ';';
+
+    const CASE_STUDIES = (typeof window !== 'undefined' && window.CASE_STUDIES) || [];
+    const currentFile = (() => { try { return decodeURIComponent(location.pathname.split('/').pop()); } catch (e) { return ''; } })();
+    const csIdx = CASE_STUDIES.findIndex(cs => cs.url === currentFile);
+    const nextCase = csIdx >= 0 ? CASE_STUDIES[(csIdx + 1) % CASE_STUDIES.length] : null;
+    const nextHref = nextCase ? encodeURI(nextCase.url) : '#';
+    const nextCover = nextCase ? nextCase.cover : '';
+    const nextAlt = nextCase ? nextCase.alt : '';
+
+    return { nav, toggleNav, chevronStyle, navWrapStyle, navHeaderMb, linkOver, linkOut, backToTop, copyEmail, copyBtnLabel, copyBtnStyle, nextHref, nextCover, nextAlt };
   }
 }
 </script>
