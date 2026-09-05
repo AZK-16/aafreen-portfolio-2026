@@ -200,7 +200,7 @@
               <div style="flex:0 0 auto;width:52px;height:52px;border-radius:50%;overflow:hidden;box-shadow:0 4px 14px rgba(74,30,46,0.16);border:2px solid #ffffff;">
                 <img src="uploads/linkedin%20profile.png" alt="Aafreen" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;" />
               </div>
-              <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">About me</h2>
+              <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">About Me</h2>
             </div>
 
             <div data-about style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
@@ -286,7 +286,7 @@
       <div id="value" style="scroll-margin-top:32px;margin-top:32px;">
         <div data-reveal style="will-change:opacity,transform;">
           <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
-            <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">What I bring to the table</h2>
+            <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">What I Bring to the Table</h2>
             <div style="display:flex;flex-direction:column;gap:16px;">
               <sc-for list="{{ valueItems }}" as="entry" hint-placeholder-count="3">
                 <div style="display:flex;gap:18px;align-items:flex-start;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
@@ -409,10 +409,10 @@ class Component extends DCLogic {
   renderVals() {
     const activeId = this.state.active;
     const items = [
-      { label: 'Case studies', href: '#emr' },
-      { label: 'About me', href: '#about' },
+      { label: 'Case Studies', href: '#emr' },
+      { label: 'About Me', href: '#about' },
       { label: 'Experience', href: '#experience' },
-      { label: 'What I bring to the table', href: '#value' },
+      { label: 'What I Bring to the Table', href: '#value' },
     ];
     const last = items.length - 1;
     const nav = items.map((it, i) => {
