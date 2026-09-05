@@ -249,12 +249,14 @@
           </div>
           <p style="margin:0 0 20px;color:#4d4a44;font-size:17px;line-height:1.5;max-width:840px;">The user interviews and mind map indicate that SPONSA&rsquo;s brand personality can be visually expressed through custom assets that represent creators across various fields.</p>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-            <div style="border:1px solid #ece6db;border-radius:14px;overflow:hidden;background:#faf9fc;">
-              <img src="uploads/Graphics%201.png" alt="Custom SPONSA brand graphic exploration 1" style="display:block;width:100%;height:auto;" />
-            </div>
-            <div style="border:1px solid #ece6db;border-radius:14px;overflow:hidden;background:#faf9fc;">
-              <img src="uploads/Graphics%202.png" alt="Custom SPONSA brand graphic exploration 2" style="display:block;width:100%;height:auto;" />
+          <div data-compare-slider style="position:relative;aspect-ratio:1644/572;border:1px solid #ece6db;border-radius:14px;overflow:hidden;background:#faf9fc;cursor:ew-resize;touch-action:none;">
+            <img src="uploads/Graphics%202.png" alt="Custom SPONSA brand graphic exploration 2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" />
+            <img data-compare-overlay src="uploads/Graphics%201.png" alt="Custom SPONSA brand graphic exploration 1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;clip-path:inset(0 50% 0 0);" />
+            <div data-compare-handle style="position:absolute;top:0;bottom:0;left:50%;width:0;transform:translateX(-50%);pointer-events:none;">
+              <div style="position:absolute;top:0;bottom:0;left:50%;width:2px;background:#ffffff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,0.12);"></div>
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#ffffff;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="chevrons-left-right" style="width:19px;height:19px;color:#4d4a44;"></i>
+              </div>
             </div>
           </div>
 
@@ -286,7 +288,7 @@
         <div id="wireframes" style="scroll-margin-top:28px;margin-top:34px;">
           <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:18px;">
             <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.3</span>
-            <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Exploring Wireframes</span>
+            <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Developing Wireframes</span>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
             <div style="aspect-ratio:4/3;border:1px dashed #d8cdb8;border-radius:14px;background:#faf9fc;"></div>
@@ -419,6 +421,38 @@ class Component extends DCLogic {
     });
     setTimeout(() => { heroShots.forEach(el => { if (getComputedStyle(el).opacity === '0') { el.getAnimations().forEach(a => { try { a.cancel(); } catch (e) {} }); el.style.opacity = '1'; el.style.transform = 'translateY(0)'; } }); }, 1600);
 
+    const slider = document.querySelector('[data-compare-slider]');
+    if (slider) {
+      const overlay = slider.querySelector('[data-compare-overlay]');
+      const handle = slider.querySelector('[data-compare-handle]');
+      const setPos = (pct) => {
+        const clamped = Math.max(0, Math.min(100, pct));
+        overlay.style.clipPath = 'inset(0 ' + (100 - clamped) + '% 0 0)';
+        handle.style.left = clamped + '%';
+      };
+      let dragging = false;
+      const moveFromEvent = (e) => {
+        const rect = slider.getBoundingClientRect();
+        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        setPos((x / rect.width) * 100);
+      };
+      const onDown = (e) => { dragging = true; moveFromEvent(e); };
+      const onMove = (e) => { if (dragging) moveFromEvent(e); };
+      const onUp = () => { dragging = false; };
+      slider.addEventListener('mousedown', onDown);
+      slider.addEventListener('touchstart', onDown, { passive: true });
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('mouseup', onUp);
+      window.addEventListener('touchend', onUp);
+      this._sliderCleanup = () => {
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('touchmove', onMove);
+        window.removeEventListener('mouseup', onUp);
+        window.removeEventListener('touchend', onUp);
+      };
+    }
+
     this.obs = new IntersectionObserver((entries) => {
       const visible = entries.filter(e => e.isIntersecting);
       if (visible.length) {
@@ -495,6 +529,7 @@ class Component extends DCLogic {
     if (this._fallbackT) clearTimeout(this._fallbackT);
     if (this.obs) this.obs.disconnect();
     if (this.revObs) this.revObs.disconnect();
+    if (this._sliderCleanup) this._sliderCleanup();
   }
 
   go(id) {
