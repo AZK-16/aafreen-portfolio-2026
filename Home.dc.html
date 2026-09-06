@@ -114,7 +114,7 @@
     <div data-topbar-menu style="{{ menuWrapStyle }}">
       <div data-topbar-menu-inner style="padding:4px 24px 22px;">
         <nav style="display:flex;flex-direction:column;">
-          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
             <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;border-bottom:1px solid #ece2d0;transition:color .2s ease;" style-hover="color:#d9852a;">{{ item.label }}</a>
           </sc-for>
         </nav>
@@ -152,7 +152,7 @@
       </div>
 
       <nav data-nav style="margin-top:30px;display:flex;flex-direction:column;">
-        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
           <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="{{ item.rowStyle }}" style-hover="background:#f3ece0;">
             <span data-nav-rail style="{{ item.railStyle }}">
               <span style="{{ item.lineStyle }}"></span>
@@ -190,6 +190,55 @@
       <a href="Time%20Capsule%20Case%20Study.dc.html" style="margin-top:32px;animation:fadeOnly .7s ease both;display:block;border-radius:22px;overflow:hidden;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#fff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
         <img src="uploads/time-capsule.png" alt="Time Capsule App case study — turning an idea into a fully functional 'Time Capsule' notes app using AI-assisted tools and front-end development skills" style="display:block;width:100%;height:auto;" />
       </a>
+
+      <div id="languages" style="scroll-margin-top:32px;margin-top:32px;">
+        <div data-reveal style="will-change:opacity,transform;">
+          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+
+            <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">Languages x Design</h2>
+            <p style="margin:12px 0 0;font-size:16px;font-weight:500;line-height:1.55;color:#4d4a44;">A little interactive space comparing left-to-right (LTR) and right-to-left (RTL) layouts based on Material Design principles, exploring how interfaces adapt to different reading directions.</p>
+
+            <div style="margin-top:28px;background:#f6e4cf;border-radius:24px;padding:36px 20px 0;position:relative;overflow:hidden;">
+
+              <div style="display:flex;justify-content:center;margin-bottom:30px;">
+                <div style="position:relative;display:inline-flex;background:#ffffff;border-radius:999px;padding:6px;box-shadow:0 4px 14px rgba(74,30,46,0.10);">
+                  <div style="position:absolute;top:6px;bottom:6px;left:6px;width:calc(50% - 6px);border-radius:999px;background:#d9852a;transition:transform .4s cubic-bezier(.22,1,.36,1);transform:translateX({{ langOffset }});"></div>
+                  <button onClick="{{ setLTR }}" style="position:relative;z-index:1;padding:10px 30px;border:0;background:transparent;font-family:'DM Sans';font-weight:700;font-size:16px;cursor:pointer;color:{{ ltrTextColor }};transition:color .3s ease;">LTR</button>
+                  <button onClick="{{ setRTL }}" style="position:relative;z-index:1;padding:10px 30px;border:0;background:transparent;font-family:'DM Sans';font-weight:700;font-size:16px;cursor:pointer;color:{{ rtlTextColor }};transition:color .3s ease;">RTL</button>
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:center;">
+                <div style="position:relative;perspective:1800px;width:300px;max-width:80%;">
+                  <div style="position:relative;width:100%;aspect-ratio:580/508;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,.2,.2,1);transform:{{ flipTransform }};margin-bottom:-28px;">
+                    <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px 20px 0 0;overflow:hidden;box-shadow:0 20px 44px rgba(74,30,46,0.18);background:#ffffff;pointer-events:{{ frontPointer }};">
+                      <img src="uploads/LTR%20(Eng).png" alt="LTR mobile layout example — Browse screen with a tacos item" style="display:block;width:100%;height:100%;object-fit:contain;object-position:top;" />
+                    </div>
+                    <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);border-radius:20px 20px 0 0;overflow:hidden;box-shadow:0 20px 44px rgba(74,30,46,0.18);background:#ffffff;pointer-events:{{ backPointer }};">
+                      <img src="uploads/RTL%20(Arabic).png" alt="RTL mobile layout example — تصفح screen with a تاكو item" style="display:block;width:100%;height:100%;object-fit:contain;object-position:top;" />
+                    </div>
+                  </div>
+
+                  <div style="position:absolute;top:0;bottom:0;left:100%;margin-left:16px;width:36px;">
+                    <button onClick="{{ toggleComment1 }}" aria-label="Comment on the search bar" style="{{ marker1Style }}" style-hover="transform:translateY(-50%) scale(1.12);">1</button>
+                    <button onClick="{{ toggleComment2 }}" aria-label="Comment on the taco item name" style="{{ marker2Style }}" style-hover="transform:translateY(-50%) scale(1.12);">2</button>
+                    <button onClick="{{ toggleComment3 }}" aria-label="Comment on the price" style="{{ marker3Style }}" style-hover="transform:translateY(-50%) scale(1.12);">3</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <sc-if value="{{ activeComment }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:22px;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;background:#fbf9f5;">
+                <span style="flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#d9852a;color:#ffffff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;">{{ activeComment }}</span>
+                <p style="margin:0;font-size:16px;line-height:1.55;color:#36342f;">{{ activeCommentText }}</p>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+      </div>
 
       <div id="about" style="scroll-margin-top:32px;margin-top:32px;">
 
@@ -342,9 +391,9 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryTrackIndex: 0, galleryInstant: false };
+  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryTrackIndex: 0, galleryInstant: false, langMode: 'LTR', activeComment: null };
   galleryTransitionMs = 900;
-  sectionIds = ['emr','about','experience','value'];
+  sectionIds = ['emr','languages','about','experience','value'];
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
     tryIcons();
@@ -418,6 +467,7 @@ class Component extends DCLogic {
     const activeId = this.state.active;
     const items = [
       { label: 'Case Studies', href: '#emr' },
+      { label: 'Languages x Design', href: '#languages' },
       { label: 'About Me', href: '#about' },
       { label: 'Experience', href: '#experience' },
       { label: 'What I Bring to the Table', href: '#value' },
@@ -551,7 +601,46 @@ class Component extends DCLogic {
     const closeLightbox = () => this.setState({ lightboxOpen: false });
     const stopPropagation = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
 
-    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle, galleryPages, galleryPageBasis, galleryTrackWidth, galleryTrackOffset, galleryTrackTransition, nextGalleryPage, lightboxOpen, lightboxSrc, lightboxAlt, closeLightbox, stopPropagation };
+    const langMode = this.state.langMode;
+    const setLTR = () => this.setState({ langMode: 'LTR', activeComment: null });
+    const setRTL = () => this.setState({ langMode: 'RTL', activeComment: null });
+    const langOffset = langMode === 'RTL' ? '100%' : '0%';
+    const ltrTextColor = langMode === 'LTR' ? '#1a1a1a' : '#8a8477';
+    const rtlTextColor = langMode === 'RTL' ? '#1a1a1a' : '#8a8477';
+    const flipTransform = 'rotateY(' + (langMode === 'RTL' ? '180deg' : '0deg') + ')';
+    const frontPointer = langMode === 'RTL' ? 'none' : 'auto';
+    const backPointer = langMode === 'RTL' ? 'auto' : 'none';
+    const activeComment = this.state.activeComment;
+    const commentTexts = {
+      1: "Not everything’s flipped — universal icons like ‘Search’ remain the same.",
+      2: "May mix between Arabic translation and transliteration for clarity.",
+      3: "Localised interface may instead use Arabic numerals.",
+    };
+    const activeCommentText = activeComment ? commentTexts[activeComment] : '';
+    const toggleComment = (n) => this.setState(s => ({ activeComment: s.activeComment === n ? null : n }));
+    const toggleComment1 = () => toggleComment(1);
+    const toggleComment2 = () => toggleComment(2);
+    const toggleComment3 = () => toggleComment(3);
+    // Invisible hotspots overlaid directly on top of the numbered callouts
+    // already baked into the RTL screenshot, so clicking the *existing*
+    // 1/2/3 badges (not a duplicate drawn on top) reveals the comment.
+    const isRTL = langMode === 'RTL';
+    // Fade in only after the .8s flip has (almost) finished, staggered so
+    // 1/2/3 cascade in one after another rather than popping in together.
+    const markerFadeDelays = [0.6, 0.78, 0.96];
+    const markerBase = 'position:absolute;left:0;width:36px;height:36px;border-radius:50%;color:#ffffff;font-weight:700;font-size:14px;font-family:\'DM Sans\';display:flex;align-items:center;justify-content:center;border:0;';
+    const markerStyle = (n, top) => {
+      const delay = markerFadeDelays[n - 1];
+      const trans = isRTL
+        ? ('opacity .7s ease-out ' + delay + 's, transform .7s ease-out ' + delay + 's, background .2s ease')
+        : 'opacity .4s ease, transform .4s ease, background .2s ease';
+      return markerBase + 'top:' + top + '%;cursor:' + (isRTL ? 'pointer' : 'default') + ';pointer-events:' + (isRTL ? 'auto' : 'none') + ';opacity:' + (isRTL ? 1 : 0) + ';transition:' + trans + ';transform:translateY(-50%)' + (activeComment === n ? ' scale(1.1)' : '') + ';background:' + (activeComment === n ? '#b6621f' : '#d9852a') + ';';
+    };
+    const marker1Style = markerStyle(1, 38);
+    const marker2Style = markerStyle(2, 58);
+    const marker3Style = markerStyle(3, 78);
+
+    return { nav, reveal0, reveal1, slotEn, slotUr, groups, valueItems, backToTop, linkOver, linkOut, toggleMenu, closeMenu, barTop, barMid, barBot, menuWrapStyle, copyEmail, copyBtnLabel, copyBtnStyle, galleryPages, galleryPageBasis, galleryTrackWidth, galleryTrackOffset, galleryTrackTransition, nextGalleryPage, lightboxOpen, lightboxSrc, lightboxAlt, closeLightbox, stopPropagation, langMode, setLTR, setRTL, langOffset, ltrTextColor, rtlTextColor, flipTransform, frontPointer, backPointer, isRTL, activeComment, activeCommentText, toggleComment1, toggleComment2, toggleComment3, marker1Style, marker2Style, marker3Style };
   }
 }
 </script>
