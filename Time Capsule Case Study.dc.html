@@ -29,12 +29,23 @@
     [data-viewnext-grid]{grid-template-columns:1fr !important;gap:26px !important;}
   }
   @media (max-width: 640px){
+    [data-viewnext-cta]{text-align:center !important;}
+    [data-viewnext-links]{justify-content:center !important;flex-wrap:wrap !important;}
     [data-tc-main] > section{padding:30px 20px !important;}
     [data-tc-h1]{font-size:29px !important;}
     [data-tc-info-row]{grid-template-columns:1fr !important;}
     [data-tc-info-row] > div{border-right:none !important;border-bottom:1px solid #ece6db;}
     [data-tc-info-row] > div:last-child{border-bottom:none;}
-    [data-tc-btn-row]{flex-direction:column !important;align-items:stretch !important;}
+    [data-tc-btn-row]{align-items:stretch !important;gap:10px !important;}
+    [data-tc-btn-row] > a{display:block !important;flex:1 1 0 !important;min-width:0 !important;text-align:center !important;padding:13px 14px !important;font-size:15px !important;line-height:1.3 !important;}
+    [data-tc-btn-row] > a > svg,[data-tc-btn-row] > a > i{display:inline-block !important;vertical-align:-4px !important;margin-right:6px !important;}
+    [data-tc-btn-row] > a[data-tc-icon-inset] > svg,[data-tc-btn-row] > a[data-tc-icon-inset] > i{margin-right:4px !important;}
+  }
+  @media (max-width: 420px){
+    [data-tc-btn-row]{gap:8px !important;}
+    [data-tc-btn-row] > a{padding:12px 10px !important;font-size:13.5px !important;}
+    [data-tc-btn-row] > a > svg,[data-tc-btn-row] > a > i{margin-right:5px !important;}
+    [data-tc-btn-row] > a[data-tc-icon-inset] > svg,[data-tc-btn-row] > a[data-tc-icon-inset] > i{margin-right:3px !important;}
   }
 </style>
 </helmet>
@@ -109,8 +120,8 @@
         </div>
 
         <div data-tc-btn-row style="margin-top:28px;display:flex;align-items:center;justify-content:center;gap:16px;">
-          <a href="https://time-capsule-notes-app-claudecode.vercel.app/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;background:#d9852a;color:#ffffff;border-radius:999px;padding:15px 28px;text-decoration:none;font-weight:700;font-size:16px;font-family:'DM Sans';box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:filter .2s ease, transform .22s ease;" style-hover="filter:brightness(0.95);transform:translateY(-2px);">
-            <i data-lucide="hourglass" style="width:18px;height:18px;color:#ffffff;"></i>Make a Time Capsule
+          <a data-tc-icon-inset href="https://time-capsule-notes-app-claudecode.vercel.app/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:#d9852a;color:#ffffff;border-radius:999px;padding:15px 28px;text-decoration:none;font-weight:700;font-size:16px;font-family:'DM Sans';box-shadow:0 6px 18px rgba(74,30,46,0.14);transition:filter .2s ease, transform .22s ease;" style-hover="filter:brightness(0.95);transform:translateY(-2px);">
+            <i data-lucide="hourglass" style="width:18px;height:18px;color:#ffffff;flex:0 0 auto;"></i>Make a Time Capsule
           </a>
           <a href="https://lnkd.in/p/eddDdvKM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;background:#ffffff;color:#d9852a;border:1.5px solid #d9852a;border-radius:999px;padding:15px 28px;text-decoration:none;font-weight:700;font-size:16px;font-family:'DM Sans';box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:transform .22s ease, box-shadow .22s ease, background .22s ease;" style-hover="transform:translateY(-2px);box-shadow:0 6px 18px rgba(74,30,46,0.10);background:#fdf3e6;">
             <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;color:#d9852a;display:block;flex:0 0 auto;"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>View LinkedIn Post
@@ -472,12 +483,12 @@
             <img src="{{ nextCover }}" alt="{{ nextAlt }}" style="display:block;width:100%;height:auto;" />
           </a>
 
-          <div style="text-align:left;">
+          <div data-viewnext-cta style="text-align:left;">
             <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.2;letter-spacing:-0.02em;color:#1a1a1a;">Let&rsquo;s build inclusive experiences for a global audience &#127757;</h2>
             <div style="margin-top:22px;">
               <button onClick="{{ copyEmail }}" style="{{ copyBtnStyle }}" style-hover="filter:brightness(0.95);">{{ copyBtnLabel }}</button>
             </div>
-            <div style="display:flex;align-items:center;gap:14px;margin-top:20px;font-size:16px;font-weight:600;color:#1a1a1a;">
+            <div data-viewnext-links style="display:flex;align-items:center;gap:14px;margin-top:20px;font-size:16px;font-weight:600;color:#1a1a1a;">
               <a href="https://linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">LinkedIn</a>
               <span style="color:#c9c1b2;">&middot;</span>
               <a href="mailto:aafreenz@hotmail.co.uk" onMouseEnter="{{ linkOver }}" onMouseLeave="{{ linkOut }}" style="text-decoration:none;color:#1a1a1a;transition:color .2s ease;">Email</a>

@@ -391,7 +391,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryTrackIndex: 0, galleryInstant: false, langMode: 'LTR', activeComment: null };
+  state = { open: {}, active: 'emr', menuOpen: false, copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryTrackIndex: 0, galleryInstant: false, galleryNarrow: (typeof window !== 'undefined' && window.innerWidth <= 620), langMode: 'LTR', activeComment: null };
   galleryTransitionMs = 900;
   sectionIds = ['emr','languages','about','experience','value'];
   componentDidMount() {
@@ -409,6 +409,17 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this.spy, { passive: true });
     this.spy();
+
+    // The gallery shows 2 artworks per page on phones and 3 above 620px, so a
+    // breakpoint change re-pages the track; snap back to the first page.
+    this.onResize = () => {
+      const narrow = window.innerWidth <= 620;
+      if (narrow === this.state.galleryNarrow) return;
+      if (this._galleryResetT) clearTimeout(this._galleryResetT);
+      this.setState({ galleryNarrow: narrow, galleryTrackIndex: 0, galleryInstant: true });
+      requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ galleryInstant: false })));
+    };
+    window.addEventListener('resize', this.onResize, { passive: true });
 
     this.onDocDown = (e) => {
       if (!this.state.menuOpen) return;
@@ -453,6 +464,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     if (this.spy) window.removeEventListener('scroll', this.spy);
+    if (this.onResize) window.removeEventListener('resize', this.onResize);
     if (this.onDocDown) document.removeEventListener('mousedown', this.onDocDown);
     if (this.onEscKey) document.removeEventListener('keydown', this.onEscKey);
     if (this.revObs) this.revObs.disconnect();
@@ -568,7 +580,7 @@ class Component extends DCLogic {
       const alt = name.replace(/\b\w/g, c => c.toUpperCase());
       return { src, alt, onClick: () => this.setState({ lightboxOpen: true, lightboxSrc: src, lightboxAlt: alt }) };
     });
-    const galleryPageSize = 3;
+    const galleryPageSize = this.state.galleryNarrow ? 2 : 3;
     const galleryPageCount = Math.ceil(galleryImages.length / galleryPageSize);
     const realPages = [];
     for (let p = 0; p < galleryPageCount; p++) {
