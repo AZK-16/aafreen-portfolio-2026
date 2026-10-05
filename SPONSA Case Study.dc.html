@@ -18,6 +18,11 @@
   html{scroll-behavior:smooth;}
   body{margin:0;background:#f5f1e9;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1a1a1a;}
   ::selection{background:#f7d6e0;}
+  /* Keyboard & switch access: every control shows where focus is. */
+  a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid #1a1a1a;outline-offset:2px;border-radius:6px;}
+  [data-skip]{position:absolute;left:-9999px;top:0;z-index:600;background:#1a1a1a;color:#ffffff;font-family:'DM Sans',system-ui,sans-serif;font-weight:700;font-size:15px;padding:12px 18px;border-radius:0 0 10px 0;text-decoration:none;}
+  [data-skip]:focus{left:0;}
+  #main:focus{outline:none;}
   @keyframes heroRise{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
   @media (max-width: 980px){
     [data-sp-page]{padding:0 !important;}
@@ -35,10 +40,31 @@
     [data-hero-bleed]{margin:20px 0 0 !important;padding:0 !important;}
     [data-sp-h1]{font-size:30px !important;}
   }
+
+  /* Narrow screens: rigid multi-column blocks stack instead of clipping. */
+  [data-cols] > *,[data-info-row] > *{min-width:0;}
+  [data-cols] p,[data-cols] span,[data-cols] div,[data-info-row] span{overflow-wrap:break-word;}
+  @media (max-width: 760px){
+    [data-cols="3"]{grid-template-columns:1fr 1fr !important;}
+  }
+  @media (max-width: 640px){
+    [data-cols="2"],[data-cols="3"]{grid-template-columns:1fr !important;gap:16px !important;}
+    [data-flow-col]{grid-auto-flow:row !important;grid-template-rows:auto !important;}
+    [data-info-row]{grid-template-columns:1fr !important;}
+    [data-info-row] > div{border-right:none !important;border-bottom:1px solid #ece6db;}
+    [data-info-row] > div:last-child{border-bottom:none !important;}
+  }
+  @media (max-width: 420px){
+    [data-sp-main] > section{padding:26px 16px !important;}
+    [data-sp-h1]{font-size:26px !important;}
+    [data-sp-main] p{font-size:17px !important;}
+  }
 </style>
 </helmet>
 
 <div data-sp-page style="min-height:100vh;background:#f5f1e9;padding:28px 24px 80px;">
+  <a data-skip href="#main">Skip to main content</a>
+
   <div data-sp-grid style="max-width:1190px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:30px;align-items:start;">
 
     <aside data-sp-aside style="position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:14px;">
@@ -46,26 +72,26 @@
         <i data-lucide="arrow-left" style="width:17px;height:17px;color:#b21e4a;"></i>Back to home
       </a>
       <div style="background:#ffffff;border:1px solid #efeae1;border-radius:20px;padding:22px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-        <div onClick="{{ toggleNav }}" title="Toggle menu" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:{{ navHeaderMb }};transition:margin-bottom .42s cubic-bezier(.22,1,.36,1);border-radius:8px;" style-hover="opacity:0.85;">
+        <button type="button" onClick="{{ toggleNav }}" aria-expanded="{{ navExpanded }}" aria-controls="cs-contents" title="Toggle menu" style="appearance:none;background:transparent;border:0;font:inherit;color:inherit;text-align:left;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:{{ navHeaderMb }};transition:margin-bottom .42s cubic-bezier(.22,1,.36,1);border-radius:8px;" style-hover="opacity:0.85;">
           <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Poppins';">Contents</div>
           <div style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;">
             <span style="{{ chevronStyle }}"><i data-lucide="chevron-down" style="width:18px;height:18px;color:#b21e4a;display:block;"></i></span>
           </div>
-        </div>
-        <div style="{{ navWrapStyle }}">
+        </button>
+        <div id="cs-contents" style="{{ navWrapStyle }}">
         <nav style="display:flex;flex-direction:column;gap:2px;border-left:2px solid #efe9df;padding-left:6px;">
           <sc-for list="{{ nav }}" as="item" hint-placeholder-count="11">
-            <div style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" style-hover="background:#fbeef2;">
+            <button type="button" style="{{ item.rootStyle }}" onClick="{{ item.onClick }}" aria-current="{{ item.current }}" style-hover="background:#fbeef2;">
               <span style="{{ item.numStyle }}">{{ item.num }}</span>
               <span style="{{ item.labelStyle }}">{{ item.label }}</span>
-            </div>
+            </button>
           </sc-for>
         </nav>
         </div>
       </div>
     </aside>
 
-    <main data-sp-main style="display:flex;flex-direction:column;gap:28px;min-width:0;">
+    <main id="main" tabindex="-1" data-sp-main style="display:flex;flex-direction:column;gap:28px;min-width:0;">
 
       <section id="introduction" data-screen-label="01 Introduction" style="background:#ffffff;border:1px solid #efeae1;border-radius:28px;padding:46px 48px;box-shadow:0 1px 2px rgba(0,0,0,0.02);overflow:hidden;">
 
@@ -75,7 +101,7 @@
           <img data-hero-shot src="uploads/SPONSA%20Landing%20Page%201.png" alt="Redesigned SPONSA landing page" style="width:100%;height:auto;display:block;border-radius:14px 14px 0 0;border:1px solid #ece6db;border-bottom:none;" />
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px;">
+        <div data-cols="2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px;">
           <div style="background:#fbf9f5;border:1px solid #ece6db;border-radius:18px;padding:26px 28px;">
             <div style="color:#b21e4a;font-weight:700;font-size:17px;margin-bottom:12px;">The Challenge</div>
             <div style="color:#4d4a44;font-size:18px;line-height:1.5;">SPONSA&rsquo;s landing page needed to better communicate its unique value proposition, build trust with new users, and create a visual experience that reflected its vibrant brand identity.</div>
@@ -86,7 +112,7 @@
           </div>
         </div>
 
-        <div style="border:1px solid #ece6db;border-radius:16px;display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:24px;overflow:hidden;">
+        <div data-info-row style="border:1px solid #ece6db;border-radius:16px;display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:24px;overflow:hidden;">
           <div style="display:flex;align-items:center;gap:12px;padding:20px 22px;border-right:1px solid #ece6db;">
             <i data-lucide="sparkles" style="width:20px;height:20px;color:#4a5fc4;flex:0 0 auto;"></i>
             <span style="font-weight:600;font-size:15px;color:#2a2a2a;">Domain: Content Creation</span>
@@ -174,7 +200,7 @@
                 <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Keep the story simple</div>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div data-cols="2" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
               <div style="background:#fbf9f5;border-radius:14px;padding:20px 22px;">
                 <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Evidence</div>
                 <div style="color:#4d4a44;font-size:16px;line-height:1.55;">Users wanted to <strong style="color:#b21e4a;font-weight:700;">quickly understand what sets SPONSA apart</strong> from other creator platforms, with information that was consistent with the product details outlined in the FAQs.</div>
@@ -196,7 +222,7 @@
                 <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Strengthen brand alignment</div>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div data-cols="2" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
               <div style="background:#fbf9f5;border-radius:14px;padding:20px 22px;">
                 <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Evidence</div>
                 <div style="color:#4d4a44;font-size:16px;line-height:1.55;">One user described the current landing page as looking "<strong style="color:#b21e4a;font-weight:700;">alpha-stage in its appearance</strong>" and it could be "<strong style="color:#b21e4a;font-weight:700;">more fun and less corporate</strong>".</div>
@@ -218,7 +244,7 @@
                 <div style="font-family:'Poppins';font-weight:700;font-size:22px;color:#1a1a1a;letter-spacing:-0.01em;">Emphasise connection with trusted payment providers</div>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div data-cols="2" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
               <div style="background:#fbf9f5;border-radius:14px;padding:20px 22px;">
                 <div style="color:#b21e4a;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Evidence</div>
                 <div style="color:#4d4a44;font-size:16px;line-height:1.55;">Users wanted to see a <strong style="color:#b21e4a;font-weight:700;">clear connection between SPONSA and its payment providers</strong>, with payment information remaining consistent with the details provided in the FAQs.</div>
@@ -268,7 +294,7 @@
 
           <div style="border:1px solid #ece6db;border-radius:20px;padding:26px 28px;margin-top:22px;">
             <div style="font-family:'Poppins';font-weight:700;font-size:20px;color:#111111;letter-spacing:-0.01em;margin-bottom:18px;">Notes</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+            <div data-cols="2" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
               <div style="background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:24px 26px;">
                 <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
                   <div style="flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#ece9fb;">
@@ -306,7 +332,7 @@
             <span style="color:#b21e4a;font-weight:700;font-size:18px;font-family:'Poppins';">6.4</span>
             <span style="color:#1a1a1a;font-weight:700;font-size:23px;font-family:'Poppins';letter-spacing:-0.01em;">Impact</span>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;">
+          <div data-cols="3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;">
             <div style="background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:26px 22px;text-align:center;">
               <div style="width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#ece9fb;margin:0 auto;">
                 <i data-lucide="users" style="width:21px;height:21px;color:#6d4fd6;"></i>
@@ -582,7 +608,8 @@ class Component extends DCLogic {
       return {
         num, label, id,
         onClick: () => this.go(id),
-        rootStyle: 'display:flex;gap:' + (sub ? '10px' : '12px') + ';align-items:center;padding:' + (sub ? '7px 10px 7px 18px' : '8px 10px') + ';border-radius:9px;cursor:pointer;transition:background .2s, transform .15s;background:' + (active ? '#fbeef2' : 'transparent') + ';',
+        current: active ? 'true' : 'false',
+        rootStyle: 'appearance:none;background:transparent;border:0;font:inherit;color:inherit;text-align:left;width:100%;display:flex;gap:' + (sub ? '10px' : '12px') + ';align-items:center;padding:' + (sub ? '7px 10px 7px 18px' : '8px 10px') + ';border-radius:9px;cursor:pointer;transition:background .2s, transform .15s;background:' + (active ? '#fbeef2' : 'transparent') + ';',
         numStyle: 'color:' + (active ? '#b21e4a' : '#d99bae') + ';font-weight:700;font-size:' + (sub ? '12px' : '13px') + ';font-family:\'Poppins\';font-variant-numeric:tabular-nums;transition:color .2s;',
         labelStyle: 'color:' + (active ? '#1a1a1a' : '#9b958d') + ';font-weight:' + (active ? '700' : '500') + ';font-size:' + (sub ? '13.5px' : '15px') + ';transition:color .2s, font-weight .2s;',
       };
@@ -591,7 +618,8 @@ class Component extends DCLogic {
     const collapsed = this.state.navCollapsed;
     const toggleNav = () => this.setState({ navCollapsed: !this.state.navCollapsed });
     const chevronStyle = 'display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.22,1,.36,1);transform:' + (collapsed ? 'rotate(0deg)' : 'rotate(180deg)') + ';';
-    const navWrapStyle = 'overflow-x:hidden;overflow-y:' + (collapsed ? 'hidden' : 'auto') + ';transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (collapsed ? '0px' : 'calc(100vh - 150px)') + ';opacity:' + (collapsed ? 0 : 1) + ';';
+    const navExpanded = collapsed ? 'false' : 'true';
+    const navWrapStyle = 'overflow-x:hidden;overflow-y:' + (collapsed ? 'hidden' : 'auto') + ';visibility:' + (collapsed ? 'hidden' : 'visible') + ';transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease, visibility 0s linear ' + (collapsed ? '.42s' : '0s') + ';max-height:' + (collapsed ? '0px' : 'calc(100vh - 150px)') + ';opacity:' + (collapsed ? 0 : 1) + ';';
     const navHeaderMb = collapsed ? '0px' : '16px';
 
     const linkOver = (e) => { e.currentTarget.style.color = '#b21e4a'; };
@@ -626,7 +654,7 @@ class Component extends DCLogic {
     const nextCover = nextCase ? nextCase.cover : '';
     const nextAlt = nextCase ? nextCase.alt : '';
 
-    return { nav, toggleNav, chevronStyle, navWrapStyle, navHeaderMb, linkOver, linkOut, backToTop, copyEmail, copyBtnLabel, copyBtnStyle, nextHref, nextCover, nextAlt };
+    return { nav, navExpanded, toggleNav, chevronStyle, navWrapStyle, navHeaderMb, linkOver, linkOut, backToTop, copyEmail, copyBtnLabel, copyBtnStyle, nextHref, nextCover, nextAlt };
   }
 }
 </script>

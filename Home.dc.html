@@ -21,6 +21,12 @@
   [data-side]::-webkit-scrollbar-track{background:transparent;}
   body{margin:0;background:#f5f1e9;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1a1a1a;}
   ::selection{background:#f7d6e0;}
+  /* Keyboard & switch access: every control shows where focus is. */
+  a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid #1a1a1a;outline-offset:2px;border-radius:6px;}
+  [data-lightbox] button:focus-visible{outline-color:#ffffff;}
+  [data-skip]{position:absolute;left:-9999px;top:0;z-index:600;background:#1a1a1a;color:#ffffff;font-family:'DM Sans',system-ui,sans-serif;font-weight:700;font-size:15px;padding:12px 18px;border-radius:0 0 10px 0;text-decoration:none;}
+  [data-skip]:focus{left:0;}
+  #main:focus{outline:none;}
   @keyframes homeFade{0%{opacity:0;transform:translateY(22px);}100%{opacity:1;transform:translateY(0);}}
   @keyframes revealUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
   @keyframes fadeOnly{from{opacity:0;}to{opacity:1;}}
@@ -82,6 +88,39 @@
     [data-topbar-name]{font-size:16px !important;}
     [data-topbar-bar]{gap:10px !important;}
   }
+  /* Small phones: give text its width back — trim gutters, shrink the
+     leading icon/photo of a row, and stack the cards that can't afford one. */
+  @media (max-width: 460px){
+    [data-main]{padding:22px 14px 40px !important;}
+    [data-card]{padding:20px 16px !important;}
+    [data-about-card]{gap:14px !important;padding:16px 14px !important;}
+    [data-about-avatar]{width:60px !important;height:60px !important;}
+    [data-exp-row]{gap:12px !important;padding:14px !important;}
+    [data-exp-icon]{width:38px !important;height:38px !important;}
+    [data-exp-icon] svg,[data-exp-icon] i{width:18px !important;height:18px !important;}
+    [data-exp-title]{font-size:17px !important;}
+    [data-value-card]{flex-direction:column !important;gap:12px !important;padding:18px 16px !important;}
+    [data-seg-toggle]{display:flex !important;width:100% !important;max-width:100% !important;}
+    [data-seg-btn]{flex:1 1 0 !important;padding:10px 8px !important;min-width:0 !important;}
+    [data-menu-link]{font-size:18px !important;overflow-wrap:anywhere !important;}
+    #value h2,#about h2,#experience h2{font-size:26px !important;}
+    /* Wrapped footer links left a dangling separator at the end of a line. */
+    [data-links]{gap:10px 18px !important;}
+    [data-links] > span{display:none !important;}
+    /* The RTL comment markers hang off the right of the phone mock; reserve
+       room for that rail so they stay on-screen instead of being clipped. */
+    [data-phone-mock][data-lang="RTL"]{max-width:calc(100% - 56px) !important;margin-right:46px !important;}
+    [data-marker-rail]{margin-left:10px !important;width:30px !important;}
+    [data-marker-rail] button{width:30px !important;height:30px !important;font-size:12.5px !important;}
+  }
+  @media (max-width: 360px){
+    [data-topbar-menu-inner]{padding:4px 14px 18px !important;}
+    [data-menu-link]{font-size:16.5px !important;min-height:50px !important;}
+    [data-about-avatar]{width:52px !important;height:52px !important;}
+    [data-hero-title]{font-size:27px !important;}
+    [data-name-en]{font-size:27px !important;}
+    [data-name-ur]{font-size:25px !important;}
+  }
   @keyframes nameFadeEn{
     0%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
     42%{opacity:1;clip-path:inset(-0.35em 0 -0.35em 0);}
@@ -101,6 +140,8 @@
 </helmet>
 
 <div data-page style="min-height:100vh;background:#f5f1e9;padding:48px 40px 64px;display:flex;align-items:flex-start;">
+
+  <a data-skip href="#main">Skip to main content</a>
 
   <header data-topbar style="display:none;position:sticky;top:0;z-index:200;background:rgba(247,243,236,0.94);backdrop-filter:saturate(1.5) blur(10px);-webkit-backdrop-filter:saturate(1.5) blur(10px);border-bottom:1px solid #ece2d0;box-shadow:0 6px 22px rgba(74,30,46,0.06);">
     <div data-topbar-bar style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;">
@@ -122,20 +163,20 @@
 
         <nav style="{{ exploreStyle }}">
           <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
-            <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="{{ item.menuRowStyle }}" style-hover="color:#d9852a;">{{ item.label }}</a>
+            <a data-menu-link href="{{ item.href }}" onClick="{{ closeMenu }}" style="{{ item.menuRowStyle }}" style-hover="color:#d9852a;">{{ item.label }}</a>
           </sc-for>
         </nav>
         <div style="{{ connectStyle }}">
           <div style="display:flex;flex-direction:column;">
-            <a href="https://www.linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:13px;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;border-bottom:1px solid #ece2d0;">
+            <a href="https://www.linkedin.com/in/aafreen-zainab-kashif-711188267" target="_blank" rel="noopener" data-menu-link style="display:flex;align-items:center;gap:13px;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;border-bottom:1px solid #ece2d0;">
               <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#f6e4cf;color:#d9852a;flex:0 0 auto;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;display:block;"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z\"/></svg></span>
               Aafreen Zainab Kashif
             </a>
-            <a href="https://github.com/AZK-16" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:13px;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;border-bottom:1px solid #ece2d0;">
+            <a href="https://github.com/AZK-16" target="_blank" rel="noopener" data-menu-link style="display:flex;align-items:center;gap:13px;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;border-bottom:1px solid #ece2d0;">
               <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#f6e4cf;color:#d9852a;flex:0 0 auto;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;display:block;"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.87.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z\"/></svg></span>
               AZK-16
             </a>
-            <a href="mailto:aafreenz@hotmail.co.uk" style="display:flex;align-items:center;gap:13px;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;">
+            <a href="mailto:aafreenz@hotmail.co.uk" data-menu-link style="display:flex;align-items:center;gap:13px;min-height:54px;font-family:'DM Sans';font-weight:600;font-size:20px;letter-spacing:-0.01em;color:#1a1a1a;text-decoration:none;">
               <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#f6e4cf;color:#d9852a;flex:0 0 auto;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;display:block;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></span>
               aafreenz@hotmail.co.uk
             </a>
@@ -187,7 +228,7 @@
       </div>
     </div>
 
-    <div data-main style="{{ reveal1 }}">
+    <div data-main id="main" tabindex="-1" role="main" style="{{ reveal1 }}">
       <a id="emr" href="EMR Case Study.dc.html" style="scroll-margin-top:32px;animation:fadeOnly .7s ease both;display:block;border-radius:22px;overflow:hidden;box-shadow:0 8px 30px rgba(74,30,46,0.10);border:1px solid #efeae1;transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;background:#fff;" style-hover="transform:translateY(-8px);box-shadow:0 26px 60px rgba(74,30,46,0.20);">
         <img src="uploads/EMR%20Background%20cream-65d9fdc8.png" alt="East Midlands Railway case study — how our team redesigned EMR's interface to streamline ticketing for diverse commuters" style="display:block;width:100%;height:auto;" />
       </a>
@@ -202,7 +243,7 @@
 
       <div id="languages" style="scroll-margin-top:32px;margin-top:32px;">
         <div data-reveal style="will-change:opacity,transform;">
-          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+          <div data-card style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
 
             <h2 style="margin:0;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">Languages x Design</h2>
             <p style="margin:12px 0 0;font-size:16px;font-weight:500;line-height:1.55;color:#4d4a44;">A little interactive space comparing left-to-right (LTR) and right-to-left (RTL) layouts based on Material Design principles, exploring how interfaces adapt to different reading directions.</p>
@@ -210,15 +251,15 @@
             <div style="margin-top:28px;background:#f6e4cf;border-radius:24px;padding:36px 20px 0;position:relative;overflow:hidden;">
 
               <div style="display:flex;justify-content:center;margin-bottom:30px;">
-                <div style="position:relative;display:inline-flex;background:#ffffff;border-radius:999px;padding:6px;box-shadow:0 4px 14px rgba(74,30,46,0.10);">
+                <div data-seg-toggle style="position:relative;display:inline-flex;background:#ffffff;border-radius:999px;padding:6px;box-shadow:0 4px 14px rgba(74,30,46,0.10);">
                   <div style="position:absolute;top:6px;bottom:6px;left:6px;width:calc(50% - 6px);border-radius:999px;background:#d9852a;transition:transform .4s cubic-bezier(.22,1,.36,1);transform:translateX({{ langOffset }});"></div>
-                  <button onClick="{{ setLTR }}" style="position:relative;z-index:1;padding:10px 30px;border:0;background:transparent;font-family:'DM Sans';font-weight:700;font-size:16px;cursor:pointer;color:{{ ltrTextColor }};transition:color .3s ease;">LTR</button>
-                  <button onClick="{{ setRTL }}" style="position:relative;z-index:1;padding:10px 30px;border:0;background:transparent;font-family:'DM Sans';font-weight:700;font-size:16px;cursor:pointer;color:{{ rtlTextColor }};transition:color .3s ease;">RTL</button>
+                  <button onClick="{{ setLTR }}" data-seg-btn style="position:relative;z-index:1;padding:10px 30px;border:0;background:transparent;font-family:'DM Sans';font-weight:700;font-size:16px;cursor:pointer;color:{{ ltrTextColor }};transition:color .3s ease;">LTR</button>
+                  <button onClick="{{ setRTL }}" data-seg-btn style="position:relative;z-index:1;padding:10px 30px;border:0;background:transparent;font-family:'DM Sans';font-weight:700;font-size:16px;cursor:pointer;color:{{ rtlTextColor }};transition:color .3s ease;">RTL</button>
                 </div>
               </div>
 
               <div style="display:flex;justify-content:center;">
-                <div style="position:relative;perspective:1800px;width:300px;max-width:80%;">
+                <div data-phone-mock data-lang="{{ langMode }}" style="position:relative;perspective:1800px;width:300px;max-width:80%;transition:margin-right .5s ease, max-width .5s ease;">
                   <div style="position:relative;width:100%;aspect-ratio:580/508;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,.2,.2,1);transform:{{ flipTransform }};margin-bottom:-28px;">
                     <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px 20px 0 0;overflow:hidden;box-shadow:0 20px 44px rgba(74,30,46,0.18);background:#ffffff;pointer-events:{{ frontPointer }};">
                       <img src="uploads/LTR%20(Eng).png" alt="LTR mobile layout example — Browse screen with a tacos item" style="display:block;width:100%;height:100%;object-fit:contain;object-position:top;" />
@@ -228,7 +269,7 @@
                     </div>
                   </div>
 
-                  <div style="position:absolute;top:0;bottom:0;left:100%;margin-left:16px;width:36px;">
+                  <div data-marker-rail style="position:absolute;top:0;bottom:0;left:100%;margin-left:16px;width:36px;">
                     <button onClick="{{ toggleComment1 }}" aria-label="Comment on the search bar" style="{{ marker1Style }}" style-hover="transform:translateY(-50%) scale(1.12);">1</button>
                     <button onClick="{{ toggleComment2 }}" aria-label="Comment on the taco item name" style="{{ marker2Style }}" style-hover="transform:translateY(-50%) scale(1.12);">2</button>
                     <button onClick="{{ toggleComment3 }}" aria-label="Comment on the price" style="{{ marker3Style }}" style-hover="transform:translateY(-50%) scale(1.12);">3</button>
@@ -252,7 +293,7 @@
       <div id="about" style="scroll-margin-top:32px;margin-top:32px;">
 
         <div data-reveal style="will-change:opacity,transform;">
-          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+          <div data-card style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
 
             <div style="display:flex;align-items:center;gap:16px;margin:0 0 22px;">
               <div style="flex:0 0 auto;width:52px;height:52px;border-radius:50%;overflow:hidden;box-shadow:0 4px 14px rgba(74,30,46,0.16);border:2px solid #ffffff;">
@@ -263,22 +304,22 @@
 
             <div data-about style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
 
-              <div style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
-                <div style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
+              <div data-about-card style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
+                <div data-about-avatar style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
                   <img src="uploads/image%2011.png" alt="Madras Coffee House" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.4);transform-origin:center;" />
                 </div>
                 <p style="margin:0;font-size:16px;font-weight:500;line-height:1.45;color:#36342f;">Born and raised in London with roots in India &#127470;&#127475;</p>
               </div>
 
-              <div style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
-                <div style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
+              <div data-about-card style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
+                <div data-about-avatar style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
                   <img src="uploads/bonjour.png" alt="Bonjour written in snow" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 50%;" />
                 </div>
                 <p style="margin:0;font-size:16px;font-weight:500;line-height:1.45;color:#36342f;">I&rsquo;m a polyglot (although I keep losing my Duolingo streak &#128148;)</p>
               </div>
 
-              <div style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
-                <div style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
+              <div data-about-card style="display:flex;align-items:center;gap:18px;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:20px 22px;">
+                <div data-about-avatar style="flex:0 0 auto;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(74,30,46,0.14);border:3px solid #ffffff;">
                   <img src="uploads/ocean%20painting.png" alt="Ocean painting" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 38%;" />
                 </div>
                 <p style="margin:0;font-size:16px;font-weight:500;line-height:1.45;color:#36342f;">My unusual interests include ocean painting and etymology &#127754;</p>
@@ -296,11 +337,11 @@
               <div style="overflow:hidden;">
                 <div style="display:flex;width:{{ galleryTrackWidth }}%;transform:translateX({{ galleryTrackOffset }}%);transition:{{ galleryTrackTransition }};">
                   <sc-for list="{{ galleryPages }}" as="page" hint-placeholder-count="2">
-                    <div data-gallery-grid style="flex:0 0 {{ galleryPageBasis }}%;min-width:0;box-sizing:border-box;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+                    <div data-gallery-grid aria-hidden="{{ page.hidden }}" style="flex:0 0 {{ galleryPageBasis }}%;min-width:0;box-sizing:border-box;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
                       <sc-for list="{{ page.images }}" as="img" hint-placeholder-count="3">
-                        <div onClick="{{ img.onClick }}" style="cursor:pointer;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid #ece6db;transition:transform .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-4px);box-shadow:0 12px 26px rgba(74,30,46,0.16);">
+                        <button type="button" onClick="{{ img.onClick }}" tabindex="{{ img.tab }}" aria-label="{{ img.aria }}" style="appearance:none;background:transparent;border:0;font:inherit;color:inherit;text-align:left;padding:0;display:block;width:100%;cursor:pointer;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid #ece6db;transition:transform .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-4px);box-shadow:0 12px 26px rgba(74,30,46,0.16);">
                           <img src="{{ img.src }}" alt="{{ img.alt }}" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;" />
-                        </div>
+                        </button>
                       </sc-for>
                     </div>
                   </sc-for>
@@ -315,26 +356,26 @@
 
       <div id="experience" style="scroll-margin-top:32px;margin-top:32px;">
         <div data-reveal style="will-change:opacity,transform;">
-          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);display:flex;flex-direction:column;gap:34px;">
+          <div data-card style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);display:flex;flex-direction:column;gap:34px;">
             <sc-for list="{{ groups }}" as="group" hint-placeholder-count="3">
               <div>
                 <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">{{ group.heading }}</h2>
                 <div style="display:flex;flex-direction:column;gap:16px;">
                   <sc-for list="{{ group.entries }}" as="entry" hint-placeholder-count="2">
                     <div style="background:#faf7f1;border:1px solid #ece6db;border-radius:16px;overflow:hidden;">
-                      <div onClick="{{ entry.onClick }}" style="display:flex;align-items:center;gap:16px;padding:16px 20px;cursor:pointer;">
-                        <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:{{ entry.iconBg }};">
+                      <button type="button" data-exp-row onClick="{{ entry.onClick }}" aria-expanded="{{ entry.expanded }}" style="appearance:none;background:transparent;border:0;font:inherit;color:inherit;text-align:left;width:100%;display:flex;align-items:center;gap:16px;padding:16px 20px;cursor:pointer;">
+                        <div data-exp-icon style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:{{ entry.iconBg }};">
                           <i data-lucide="{{ entry.icon }}" style="width:21px;height:21px;color:{{ entry.iconColor }};"></i>
                         </div>
                         <div style="flex:1 1 auto;min-width:0;">
-                          <div style="font-family:'DM Sans';font-weight:700;font-size:19px;line-height:1.25;color:#1a1a1a;">{{ entry.title }}</div>
+                          <div data-exp-title style="font-family:'DM Sans';font-weight:700;font-size:19px;line-height:1.25;color:#1a1a1a;">{{ entry.title }}</div>
                           <sc-if value="{{ entry.hasSubtitle }}" hint-placeholder-val="{{ true }}">
                             <div style="margin-top:2px;font-size:14px;font-weight:500;color:#6b6862;">{{ entry.subtitle }}</div>
                           </sc-if>
                         </div>
                         <div data-exp-date style="flex:0 0 auto;font-weight:700;font-size:15px;color:#6b6862;white-space:nowrap;">{{ entry.date }}</div>
                         <span style="{{ entry.chevronStyle }}"><i data-lucide="chevron-down" style="width:20px;height:20px;color:#d9852a;display:block;"></i></span>
-                      </div>
+                      </button>
                       <div style="{{ entry.bodyWrapStyle }}">
                         <div style="border-top:1px solid #ece6db;padding:16px 20px 18px;font-size:16px;line-height:1.55;color:#4d4a44;">{{ entry.body }}</div>
                       </div>
@@ -349,11 +390,11 @@
 
       <div id="value" style="scroll-margin-top:32px;margin-top:32px;">
         <div data-reveal style="will-change:opacity,transform;">
-          <div style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
+          <div data-card style="background:#ffffff;border:1px solid #efeae1;border-radius:22px;padding:34px;box-shadow:0 8px 30px rgba(74,30,46,0.08);">
             <h2 style="margin:0 0 22px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-0.02em;color:#1a1a1a;">What I Bring to the Table</h2>
             <div style="display:flex;flex-direction:column;gap:16px;">
               <sc-for list="{{ valueItems }}" as="entry" hint-placeholder-count="3">
-                <div style="display:flex;gap:18px;align-items:flex-start;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
+                <div data-value-card style="display:flex;gap:18px;align-items:flex-start;background:#ffffff;border:1px solid #ece6db;border-radius:16px;padding:22px 24px;">
                   <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:{{ entry.iconBg }};">
                     <i data-lucide="{{ entry.icon }}" style="width:24px;height:24px;color:{{ entry.iconColor }};"></i>
                   </div>
@@ -389,8 +430,8 @@
   </div>
 
   <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:500;background:rgba(20,16,12,0.86);display:flex;align-items:center;justify-content:center;padding:40px;animation:fadeOnly .25s ease both;">
-      <button onClick="{{ closeLightbox }}" aria-label="Close" style="position:absolute;top:24px;right:28px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,0.12);color:#ffffff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease;" style-hover="background:rgba(255,255,255,0.22);">
+    <div data-lightbox role="dialog" aria-modal="true" aria-label="{{ lightboxAlt }}" onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:500;background:rgba(20,16,12,0.86);display:flex;align-items:center;justify-content:center;padding:40px;animation:fadeOnly .25s ease both;">
+      <button type="button" data-lightbox-close onClick="{{ closeLightbox }}" aria-label="Close" style="position:absolute;top:24px;right:28px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,0.12);color:#ffffff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease;" style-hover="background:rgba(255,255,255,0.22);">
         <i data-lucide="x" style="width:22px;height:22px;color:#ffffff;display:block;"></i>
       </button>
       <img onClick="{{ stopPropagation }}" src="{{ lightboxSrc }}" alt="{{ lightboxAlt }}" style="max-width:90vw;max-height:88vh;display:block;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,0.5);" />
@@ -402,6 +443,24 @@
 class Component extends DCLogic {
   state = { open: {}, active: 'emr', menuOpen: false, menuTab: 'explore', copied: false, lightboxOpen: false, lightboxSrc: '', lightboxAlt: '', galleryTrackIndex: 0, galleryInstant: false, galleryNarrow: (typeof window !== 'undefined' && window.innerWidth <= 620), langMode: 'LTR', activeComment: null };
   galleryTransitionMs = 900;
+
+  // The lightbox is a modal: remember what opened it, put focus on its Close
+  // button, and hand focus back to that artwork when it shuts.
+  openLightboxFocus(src, alt) {
+    this._lightboxOpener = document.activeElement;
+    this.setState({ lightboxOpen: true, lightboxSrc: src, lightboxAlt: alt });
+    setTimeout(() => {
+      const close = document.querySelector('[data-lightbox-close]');
+      if (close) close.focus();
+    }, 0);
+  }
+
+  closeLightboxFocus() {
+    this.setState({ lightboxOpen: false });
+    const opener = this._lightboxOpener;
+    this._lightboxOpener = null;
+    if (opener && opener.focus) setTimeout(() => opener.focus(), 0);
+  }
   sectionIds = ['emr','languages','about','experience','value'];
   componentDidMount() {
     const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 120); };
@@ -438,7 +497,18 @@ class Component extends DCLogic {
     document.addEventListener('mousedown', this.onDocDown);
 
     this.onEscKey = (e) => {
-      if (e.key === 'Escape' && this.state.lightboxOpen) this.setState({ lightboxOpen: false });
+      if (e.key === 'Escape' && this.state.lightboxOpen) return this.closeLightboxFocus();
+      if (e.key === 'Escape' && this.state.menuOpen) {
+        this.setState({ menuOpen: false, menuTab: 'explore' });
+        const burger = document.querySelector('[data-burger]');
+        if (burger) burger.focus();
+        return;
+      }
+      // The lightbox holds a single control, so keeping Tab on it is the trap.
+      if (e.key === 'Tab' && this.state.lightboxOpen) {
+        const close = document.querySelector('[data-lightbox-close]');
+        if (close) { e.preventDefault(); close.focus(); }
+      }
     };
     document.addEventListener('keydown', this.onEscKey);
 
@@ -531,8 +601,9 @@ class Component extends DCLogic {
         date: e.date,
         body: e.body,
         onClick: () => toggle(e.id),
+        expanded: open ? 'true' : 'false',
         chevronStyle: 'flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.22,1,.36,1);transform:rotate(' + (open ? '180deg' : '0deg') + ');',
-        bodyWrapStyle: 'overflow:hidden;transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (open ? '360px' : '0px') + ';opacity:' + (open ? 1 : 0) + ';',
+        bodyWrapStyle: 'overflow:hidden;visibility:' + (open ? 'visible' : 'hidden') + ';transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease, visibility 0s linear ' + (open ? '0s' : '.42s') + ';max-height:' + (open ? '360px' : '0px') + ';opacity:' + (open ? 1 : 0) + ';',
       };
     };
     const groups = [
@@ -559,7 +630,7 @@ class Component extends DCLogic {
     const barTop = barBase + 'top:2px;transform-origin:center;' + (mOpen ? 'transform:translateY(7.75px) rotate(45deg);' : '');
     const barMid = barBase + 'top:9.75px;' + (mOpen ? 'opacity:0;transform:scaleX(0.5);' : '');
     const barBot = barBase + 'bottom:2px;transform-origin:center;' + (mOpen ? 'transform:translateY(-7.75px) rotate(-45deg);' : '');
-    const menuWrapStyle = 'overflow:hidden;transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease;max-height:' + (mOpen ? '620px' : '0px') + ';opacity:' + (mOpen ? 1 : 0) + ';';
+    const menuWrapStyle = 'overflow:hidden;visibility:' + (mOpen ? 'visible' : 'hidden') + ';transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .3s ease, visibility 0s linear ' + (mOpen ? '0s' : '.42s') + ';max-height:' + (mOpen ? '620px' : '0px') + ';opacity:' + (mOpen ? 1 : 0) + ';';
     const toggleMenu = (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState(s => ({ menuOpen: !s.menuOpen, menuTab: s.menuOpen ? 'explore' : s.menuTab })); };
     const closeMenu = () => { if (this.state.menuOpen) this.setState({ menuOpen: false, menuTab: 'explore' }); };
     const menuTab = this.state.menuTab;
@@ -597,7 +668,7 @@ class Component extends DCLogic {
     const galleryImages = galleryFiles.map(name => {
       const src = 'uploads/gallery%20pics/' + encodeURIComponent(name) + '.png';
       const alt = name.replace(/\b\w/g, c => c.toUpperCase());
-      return { src, alt, onClick: () => this.setState({ lightboxOpen: true, lightboxSrc: src, lightboxAlt: alt }) };
+      return { src, alt, onClick: () => this.openLightboxFocus(src, alt) };
     });
     const galleryPageSize = this.state.galleryNarrow ? 2 : 3;
     const galleryPageCount = Math.ceil(galleryImages.length / galleryPageSize);
@@ -608,9 +679,18 @@ class Component extends DCLogic {
     // Append a clone of the first page so "next" past the last page keeps sliding
     // in the same direction; once the clone finishes animating in, we snap the
     // track back to the real first page with transitions off (invisible jump).
-    const galleryPages = realPages.concat([realPages[0]]);
-    const slideCount = galleryPages.length;
+    const rawPages = realPages.concat([realPages[0]]);
+    const slideCount = rawPages.length;
     const galleryTrackIndex = this.state.galleryTrackIndex;
+    // Off-screen pages (and the cloned wrap-around page) stay out of the tab
+    // order, so keyboard focus never lands on an artwork nobody can see.
+    const galleryPages = rawPages.map((pg, i) => ({
+      hidden: i === galleryTrackIndex ? 'false' : 'true',
+      images: pg.images.map(im => Object.assign({}, im, {
+        tab: i === galleryTrackIndex ? '0' : '-1',
+        aria: 'View artwork: ' + im.alt,
+      })),
+    }));
     const galleryPageBasis = 100 / slideCount;
     const galleryTrackWidth = slideCount * 100;
     const galleryTrackOffset = -(galleryTrackIndex * galleryPageBasis);
@@ -629,7 +709,7 @@ class Component extends DCLogic {
     const lightboxOpen = this.state.lightboxOpen;
     const lightboxSrc = this.state.lightboxSrc;
     const lightboxAlt = this.state.lightboxAlt;
-    const closeLightbox = () => this.setState({ lightboxOpen: false });
+    const closeLightbox = () => this.closeLightboxFocus();
     const stopPropagation = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
 
     const langMode = this.state.langMode;
